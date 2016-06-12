@@ -3,8 +3,12 @@
 
 namespace DueItModel
 {
-	Task::Task()
+	Task::Task(int start, int d, int m, int y)
 	{
+		startTime = start;
+		day = d;
+		month = m;
+		year = y;
 	}
 
 	Task::~Task()

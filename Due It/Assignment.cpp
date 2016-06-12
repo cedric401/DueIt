@@ -17,18 +17,7 @@ namespace DueItModel
 	{
 		return std::string();
 	}
-	void Assignment::setTime(int newTime)
-	{
-	}
-	void Assignment::setDay(int newDay)
-	{
-	}
-	void Assignment::setMonth(int newMonth)
-	{
-	}
-	void Assignment::setYear(int newYear)
-	{
-	}
+	
 	void Assignment::setCourse(Course newCourse)
 	{
 	}

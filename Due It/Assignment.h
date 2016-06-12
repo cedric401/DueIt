@@ -10,10 +10,6 @@ namespace DueItModel
 		Assignment();
 		~Assignment();
 		std::string toString();
-		void setTime(int newTime);
-		void setDay(int newDay);
-		void setMonth(int newMonth);
-		void setYear(int newYear);
 		void setCourse(Course newCourse);
 		Course getCourse();
 		void setEstimatedTimeToComplete(int newTime);

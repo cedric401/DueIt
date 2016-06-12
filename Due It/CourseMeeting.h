@@ -11,10 +11,6 @@ namespace DueItModel
 		CourseMeeting(int startingTime, int workDay, int mnth, int yr, int endingTime, Course aCourse);
 		~CourseMeeting();
 		std::string toString();
-		void setTime(int newTime);
-		void setDay(int newDay);
-		void setMonth(int newMonth);
-		void setYear(int newYear);
 		void setEndTime(int newTime);
 		int getEndTime();
 		void setCourse(Course newCourse);

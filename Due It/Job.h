@@ -12,10 +12,6 @@ namespace DueItModel
 		~Job();
 		float calcPay();
 		std::string toString();
-		void setTime(int newTime);
-		void setDay(int newDay);
-		void setMonth(int newMonth);
-		void setYear(int newYear);
 		void setEmployer(Company newEmployer);
 		Company getEmployer() const;
 		void setEnd(int newEnd);

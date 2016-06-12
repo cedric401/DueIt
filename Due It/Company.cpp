@@ -7,8 +7,13 @@ namespace DueItModel
 {
 	Company::Company(std::string nameOfCompany)
 	{
-		//readEntry(nameOfCompany);
+		readEntry(nameOfCompany);
+	}
+
+	Company::Company(std::string nameOfCompany, std::string address)
+	{
 		companyName = nameOfCompany;
+		companyAddress = address;
 	}
 
 	Company::~Company()
@@ -20,10 +25,19 @@ namespace DueItModel
 	}
 	void Company::setCompanyName(std::string newName)
 	{
+		companyName = newName;
 	}
 	std::string Company::getCompanyName()
 	{
-		return std::string();
+		return companyName;
+	}
+	void Company::setCompanyAddress(std::string newAddress)
+	{
+		companyAddress = newAddress;
+	}
+	std::string Company::getCompanyAddress()
+	{
+		return companyAddress;
 	}
 	void Company::createEntry()
 	{

@@ -10,12 +10,9 @@ namespace DueItModel
 		readEntry(dbRowID);
 	}
 
-	Job::Job(int startingTime, int endingTime, int workDay, int mnth, int yr, Company jobEmployer, int hrs, float hrlyRate)
+	Job::Job(int startingTime, int endingTime, int workDay, int mnth, int yr, Company jobEmployer, int hrs, float hrlyRate) 
+		: Task(startingTime, workDay, mnth, yr)
 	{
-		startTime = startingTime;
-		endTime = endingTime;
-		day = workDay;
-		month = mnth;
 		year = yr;
 		employer = jobEmployer;
 		hours = hrs;
@@ -40,7 +37,7 @@ namespace DueItModel
 		{
 			endDay++;
 			//if (endDay > daysinthemonth)
-			//TODO finish writing code to handle when a shift runs to the next day/month/year
+			//TODO finish writing code to handle when a shift runs to the next day/month/year or find a library with calendar code
 		}
 		std::stringstream formattedTime;
 		formattedTime << "Shift beginning time: " << (startTime / 3600) << ":" << ((startTime % 3600) / 60) << ":" << (startTime % 60) <<
@@ -48,28 +45,9 @@ namespace DueItModel
 		return formattedTime.str();
 	}
 
-	void Job::setTime(int newTime)
-	{
-		startTime = newTime;
-	}
-
-	void Job::setDay(int newDay)
-	{
-		day = newDay;
-	}
-
-	void Job::setMonth(int newMonth)
-	{
-		month = newMonth;
-	}
-
-	void Job::setYear(int newYear)
-	{
-		year = newYear;
-	}
-
 	void Job::setEmployer(Company newEmployer)
 	{
+		employer = newEmployer;
 	}
 
 	Company Job::getEmployer() const
@@ -79,6 +57,7 @@ namespace DueItModel
 
 	void Job::setEnd(int newEnd)
 	{
+		endTime = newEnd;
 	}
 
 	int Job::getEnd() const
@@ -88,6 +67,7 @@ namespace DueItModel
 
 	void Job::setHours(int newHours)
 	{
+		hours = newHours;
 	}
 
 	int Job::getHours() const
@@ -97,6 +77,7 @@ namespace DueItModel
 
 	void Job::setRate(float newRate)
 	{
+		rate = newRate;
 	}
 
 	float Job::getRate() const

@@ -1,10 +1,19 @@
-﻿Build started 6/7/2016 1:07:01 AM.
-     1>Project "C:\Users\Tyler\documents\visual studio 2015\Projects\Due It\Due It\Due It.vcxproj" on node 2 (Build target(s)).
+﻿Build started 6/11/2016 10:52:40 PM.
+     1>Project "C:\Users\Tyler\Documents\GitHub\DueIt\Due It\Due It.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Schedule.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Assignment.cpp Company.cpp Course.cpp CourseMeeting.cpp DueIt.cpp Job.cpp Payment.cpp Schedule.cpp Task.cpp
+         Task.cpp
          Schedule.cpp
+         Payment.cpp
+         Job.cpp
+         DueIt.cpp
+         CourseMeeting.cpp
+         Course.cpp
+         Company.cpp
+         Assignment.cpp
+         Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Tyler\documents\visual studio 2015\Projects\Due It\Debug\Due It.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Tyler\documents\visual studio 2015\Projects\Due It\Debug\Due It.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Tyler\documents\visual studio 2015\Projects\Due It\Debug\Due It.lib" /MACHINE:X86 Debug\Assignment.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Tyler\Documents\GitHub\DueIt\Debug\Due It.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Tyler\Documents\GitHub\DueIt\Debug\Due It.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Tyler\Documents\GitHub\DueIt\Debug\Due It.lib" /MACHINE:X86 Debug\Assignment.obj
          Debug\Company.obj
          Debug\Course.obj
          Debug\CourseMeeting.obj
@@ -13,9 +22,9 @@
          Debug\Payment.obj
          Debug\Schedule.obj
          Debug\Task.obj
-         Due It.vcxproj -> C:\Users\Tyler\documents\visual studio 2015\Projects\Due It\Debug\Due It.exe
-     1>Done Building Project "C:\Users\Tyler\documents\visual studio 2015\Projects\Due It\Due It\Due It.vcxproj" (Build target(s)).
+         Due It.vcxproj -> C:\Users\Tyler\Documents\GitHub\DueIt\Debug\Due It.exe
+     1>Done Building Project "C:\Users\Tyler\Documents\GitHub\DueIt\Due It\Due It.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.93
+Time Elapsed 00:00:06.60

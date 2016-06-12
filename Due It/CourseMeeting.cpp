@@ -28,18 +28,6 @@ namespace DueItModel
 	{
 		return std::string();
 	}
-	void CourseMeeting::setTime(int newTime)
-	{
-	}
-	void CourseMeeting::setDay(int newDay)
-	{
-	}
-	void CourseMeeting::setMonth(int newMonth)
-	{
-	}
-	void CourseMeeting::setYear(int newYear)
-	{
-	}
 	void CourseMeeting::setEndTime(int newTime)
 	{
 	}

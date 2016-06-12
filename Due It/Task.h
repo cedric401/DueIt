@@ -11,16 +11,16 @@ namespace DueItModel
 		int year;
 
 	public:
-		Task();
+		Task(int start = 0, int d = 1, int m = 1, int y = 1);
 		virtual ~Task();
 		virtual std::string toString();
-		virtual void setTime(int newTime);
+		void setTime(int newTime);
 		int getTime() const;
-		virtual void setDay(int newDay);
+		void setDay(int newDay);
 		int getDay() const;
-		virtual void setMonth(int newMonth);
+		void setMonth(int newMonth);
 		int getMonth() const;
-		virtual void setYear(int newYear);
+		void setYear(int newYear);
 		int getYear() const;
 
 	private:

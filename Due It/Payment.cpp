@@ -10,12 +10,9 @@ namespace DueItModel
 	}
 
 
-	Payment::Payment(int startingTime, int workDay, int mnth, int yr, Company aCompany, double paymentAmount, bool paidStatus, std::string anAccountType)
+	Payment::Payment(int startingTime, int paymentDay, int mnth, int yr, Company aCompany, double paymentAmount, bool paidStatus, std::string anAccountType) 
+		: Task(startingTime, paymentDay, mnth, yr)
 	{
-		startTime = startingTime;
-		day = workDay;
-		month = mnth;
-		year = yr;
 		company = aCompany;
 		amount = paymentAmount;
 		isPaid = paidStatus;
@@ -28,34 +25,20 @@ namespace DueItModel
 
 	std::string Payment::toString()
 	{
+		std::string paymentStatus = "is not paid";
+		if(isPaid)
+		{
+			paymentStatus = "is paid";
+		}
 		std::stringstream formattedTime;
-		formattedTime << "Payment due at time: " << (startTime / 3600) << ":" << ((startTime % 3600) / 60) << ":" << (startTime % 60) <<
-			" on " << month << "/" << day << "/" << year << "\n";
+		formattedTime << accountType << "payment of " << amount << " due at time: " << (startTime / 3600) << ":" << ((startTime % 3600) / 60) << ":" 
+			<< (startTime % 60) << " on " << month << "/" << day << "/" << year << " to " << company.getCompanyName() << " and " << paymentStatus <<  ".\n";
 		return formattedTime.str();
-	}
-
-	void Payment::setTime(int newTime)
-	{
-		startTime = newTime;
-	}
-
-	void Payment::setDay(int newDay)
-	{
-		day = newDay;
-	}
-
-	void Payment::setMonth(int newMonth)
-	{
-		month = newMonth;
-	}
-
-	void Payment::setYear(int newYear)
-	{
-		year = newYear;
 	}
 
 	void Payment::setAmount(double newAmount)
 	{
+		amount = newAmount;
 	}
 
 	double Payment::getAmount()
@@ -65,15 +48,17 @@ namespace DueItModel
 
 	void Payment::setIsPaid(bool paidStatus)
 	{
+		isPaid = paidStatus;
 	}
 
 	bool Payment::getIsPaid()
 	{
-		return false;
+		return isPaid;
 	}
 
 	void Payment::setCompany(Company aCompany)
 	{
+		company = aCompany;
 	}
 
 	Company Payment::getCompany()
@@ -83,11 +68,12 @@ namespace DueItModel
 
 	void Payment::setAccountType(std::string newType)
 	{
+		accountType = newType;
 	}
 
 	std::string Payment::getAccountType()
 	{
-		return std::string();
+		return accountType;
 	}
 
 	void Payment::createEntry()
