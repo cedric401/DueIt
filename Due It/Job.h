@@ -24,8 +24,8 @@ namespace DueItModel
 	private:
 		Company employer;
 		int endTime; //0 <= endTime <= 86,399 (86,400 seconds in a day)
-		int hours;
-		float rate;
+		int hours; //0 <= hours
+		float rate; //0 <= rate
 		int rowID; //To identify the corresponding location in the database where the Job information is stored
 		void createEntry();
 		void deleteEntry();

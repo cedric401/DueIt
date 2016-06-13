@@ -21,7 +21,7 @@ namespace DueItModel
 		std::string getAccountType();
 
 	private:
-		double amount;
+		double amount; // amount < 0 if money is owed to company, amount > 0 if company is paying the user
 		bool isPaid;
 		Company company;
 		std::string accountType;

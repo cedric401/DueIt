@@ -25,7 +25,10 @@ namespace DueItModel
 
 	void Task::setTime(int newTime)
 	{
-		startTime = newTime;
+		if (newTime < 0 || newTime > 86399)
+		{
+			startTime = newTime;
+		}
 	}
 
 	int Task::getTime() const
@@ -35,7 +38,10 @@ namespace DueItModel
 
 	void Task::setDay(int newDay)
 	{
-		day = newDay;
+		if (newDay > 0 && newDay < 32)
+		{
+			day = newDay;
+		}
 	}
 
 	int Task::getDay() const
@@ -45,7 +51,10 @@ namespace DueItModel
 
 	void Task::setMonth(int newMonth)
 	{
-		month = newMonth;
+		if (newMonth > 0 && newMonth < 13)
+		{
+			month = newMonth;
+		}
 	}
 
 	int Task::getMonth() const
