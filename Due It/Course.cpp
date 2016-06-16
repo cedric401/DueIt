@@ -26,16 +26,20 @@ namespace DueItModel
 	void Course::setCourseNumber(int newNumber)
 	{
 	}
-	int Course::getCourseNumber()
+	int Course::getCourseNumber() const
 	{
 		return 0;
 	}
-	void Course::setCourseName(std::string newName)
+	void Course::setCourseName(const std::string& newName)
 	{
 	}
-	std::string Course::getCourseName()
+	std::string Course::getCourseName() const
 	{
 		return std::string();
+	}
+	bool Course::operator==(const Course & rhs)
+	{
+		return false;
 	}
 	void Course::createEntry()
 	{

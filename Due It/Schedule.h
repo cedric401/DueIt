@@ -1,6 +1,11 @@
 #pragma once
 #include <vector>
 #include "Task.h"
+#include "Job.h"
+#include "Payment.h"
+#include "CourseMeeting.h"
+#include "Assignment.h"
+
 namespace DueItModel
 {
 	class Schedule
@@ -19,13 +24,12 @@ namespace DueItModel
 		std::vector<Task> findStudyTime();
 		std::string toString();
 		Task getTask(int index);
+		void setCurrentTime(struct tm *newTime);
+		struct tm * getCurrentTime();
 
 	private:
+		struct tm *currentTime;
 		std::vector<Task> currentSchedule;
-		int currentTime; //0 <= startTime <= 86,399 (86,400 seconds in a day)
-		int currentDay; //1 <= day <= 31
-		int currentMonth; //1 <= month <= 12
-		int currentYear;
 		void sortTasks();
 	};
 };

@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClCompile Include="Assignment.cpp" />
     <ClCompile Include="Company.cpp" />
+    <ClCompile Include="Console_Controller.cpp" />
     <ClCompile Include="Course.cpp" />
     <ClCompile Include="CourseMeeting.cpp" />
     <ClCompile Include="DueIt.cpp" />
@@ -131,6 +132,7 @@
   <ItemGroup>
     <ClInclude Include="Assignment.h" />
     <ClInclude Include="Company.h" />
+    <ClInclude Include="Console_Controller.h" />
     <ClInclude Include="Course.h" />
     <ClInclude Include="CourseMeeting.h" />
     <ClInclude Include="Job.h" />

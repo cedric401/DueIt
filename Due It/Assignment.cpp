@@ -21,23 +21,27 @@ namespace DueItModel
 	void Assignment::setCourse(Course newCourse)
 	{
 	}
-	Course Assignment::getCourse()
+	Course Assignment::getCourse() const
 	{
 		return Course();
 	}
 	void Assignment::setEstimatedTimeToComplete(int newTime)
 	{
 	}
-	int Assignment::getEstimatedTimeToComplete()
+	int Assignment::getEstimatedTimeToComplete() const
 	{
 		return 0;
 	}
-	void Assignment::setDetails(std::string newDetails)
+	void Assignment::setDetails(const std::string& newDetails)
 	{
 	}
-	std::string Assignment::getDetails()
+	std::string Assignment::getDetails() const
 	{
 		return std::string();
+	}
+	bool Assignment::operator==(const Assignment & rhs)
+	{
+		return false;
 	}
 	void Assignment::createEntry()
 	{

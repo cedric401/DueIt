@@ -14,6 +14,7 @@ namespace DueItModel
 		Task(int start = 0, int d = 1, int m = 1, int y = 1);
 		virtual ~Task();
 		virtual std::string toString();
+		virtual bool operator==(const Task& rhs);
 		void setTime(int newTime);
 		int getTime() const;
 		void setDay(int newDay);

@@ -10,9 +10,10 @@ namespace DueItModel
 		~Course();
 		std::string toString();
 		void setCourseNumber(int newNumber);
-		int getCourseNumber();
-		void setCourseName(std::string newName);
-		std::string getCourseName();
+		int getCourseNumber() const;
+		void setCourseName(const std::string& newName);
+		std::string getCourseName() const;
+		bool operator==(const Course& rhs);
 
 	private:
 		int courseNumber;

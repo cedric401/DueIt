@@ -31,16 +31,20 @@ namespace DueItModel
 	void CourseMeeting::setEndTime(int newTime)
 	{
 	}
-	int CourseMeeting::getEndTime()
+	int CourseMeeting::getEndTime() const
 	{
 		return 0;
 	}
 	void CourseMeeting::setCourse(Course newCourse)
 	{
 	}
-	Course CourseMeeting::getCourse()
+	Course CourseMeeting::getCourse() const
 	{
 		return Course();
+	}
+	bool CourseMeeting::operator==(const CourseMeeting & rhs)
+	{
+		return false;
 	}
 	void CourseMeeting::createEntry()
 	{

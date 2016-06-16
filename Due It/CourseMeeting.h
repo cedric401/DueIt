@@ -12,9 +12,10 @@ namespace DueItModel
 		~CourseMeeting();
 		std::string toString();
 		void setEndTime(int newTime);
-		int getEndTime();
+		int getEndTime() const;
 		void setCourse(Course newCourse);
-		Course getCourse();
+		Course getCourse() const;
+		bool operator==(const CourseMeeting& rhs);
 
 	private:
 		int endTime;

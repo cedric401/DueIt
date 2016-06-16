@@ -9,10 +9,11 @@ namespace DueItModel
 		Company(std::string nameOfCompany = "Default Value Co.", std::string address = "123 Main Street");
 		~Company();
 		std::string toString();
-		void setCompanyName(std::string newName);
-		std::string getCompanyName();
-		void setCompanyAddress(std::string newAddress);
-		std::string getCompanyAddress();
+		void setCompanyName(const std::string& newName);
+		std::string getCompanyName() const;
+		void setCompanyAddress(const std::string& newAddress);
+		std::string getCompanyAddress() const;
+		bool operator==(const Company& rhs);
 
 	private:
 		std::string companyName;
