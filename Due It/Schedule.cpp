@@ -8,7 +8,7 @@ namespace DueItModel
 {
 	Schedule::Schedule()
 	{
-		currentSchedule = vector<Task>();
+		currentSchedule = vector<Task *>();
 		time_t now;
 		time(&now);
 		currentTime = localtime(&now);
@@ -23,17 +23,18 @@ namespace DueItModel
 		time(&now);
 		currentTime = localtime(&now);
 	}
-	void Schedule::addTask(Task newTask)
+	void Schedule::addTask(Task * newTask)
 	{
 		currentSchedule.insert(currentSchedule.end(), newTask);
 	}
-	void Schedule::deleteTask(Task aTask)
+	void Schedule::deleteTask(Task * aTask)
 	{
-		for (std::vector<Task>::iterator iter = currentSchedule.begin(); iter != currentSchedule.end(); ++iter)
+		for (std::vector<Task *>::iterator iter = currentSchedule.begin(); iter != currentSchedule.end(); ++iter)
 		{
 			if (*iter == aTask)
 			{
 				currentSchedule.erase(iter);
+				delete aTask;
 				break;
 			}
 		}
@@ -56,7 +57,7 @@ namespace DueItModel
 	}
 	void Schedule::setTypeTasksShown(int type)
 	{
-		vector<Task> newSchedule = vector<Task>();
+		vector<Task *> newSchedule = vector<Task *>();
 		string taskType;
 		switch (type)
 		{
@@ -77,33 +78,37 @@ namespace DueItModel
 			break;
 		}
 
-		for (Task aTask : currentSchedule)
+		for (Task * aTask : currentSchedule)
 		{
 			if (taskType != typeid(aTask).name())
 			{
 				newSchedule.insert(newSchedule.end(), aTask);
 			}
+			else
+			{
+				delete aTask;
+			}
 		}
 
 		currentSchedule = newSchedule;
 	}
-	vector<Task> Schedule::findStudyTime()
+	vector<Task *> Schedule::findStudyTime()
 	{
 		//TODO
-		return vector<Task>();
+		return vector<Task *>();
 	}
 	string Schedule::toString()
 	{
 		string tasksString = "Current Schedule: \n";
 
-		for (Task aTask : currentSchedule)
+		for (Task * aTask : currentSchedule)
 		{
-			tasksString += aTask.toString();
+			tasksString += aTask->toString();
 		}
 
 		return tasksString;
 	}
-	Task Schedule::getTask(int index)
+	Task * Schedule::getTask(int index)
 	{
 		return currentSchedule.at(index);
 	}
