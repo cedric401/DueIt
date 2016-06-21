@@ -28,6 +28,51 @@
     <Filter Include="Source Files\Windows View">
       <UniqueIdentifier>{e0e5a9b9-4870-4834-8384-f91c13fa50a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Model">
+      <UniqueIdentifier>{62367d8e-9656-419d-a06d-e421c077e6ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View">
+      <UniqueIdentifier>{30de821a-787d-4aaf-aa17-a018b18c89c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Controller">
+      <UniqueIdentifier>{dd67e0e2-aa1e-4295-9348-159e65075baa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Assignments">
+      <UniqueIdentifier>{5a59299c-c303-4032-a0e0-68ec702d9bc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Controller\Assignments">
+      <UniqueIdentifier>{123406ff-e45b-4530-9876-fe99e556d65d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\Assignments">
+      <UniqueIdentifier>{42dac15b-48ea-409c-9f62-b2274603872d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Bills">
+      <UniqueIdentifier>{a0a008b6-981b-427a-9d1c-51b67c19079a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Controller\Bills">
+      <UniqueIdentifier>{6b29194e-275c-4cd0-8ee4-f12cbb3e42d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\Bills">
+      <UniqueIdentifier>{fd8f35d5-d338-4c92-a1c5-8d795930c1a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Controller\Bills Controllers">
+      <UniqueIdentifier>{13a72c4e-abf5-49ed-bc25-ff5a36226caa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Models\Bills Models">
+      <UniqueIdentifier>{c61dfd27-5c4c-42ae-97c3-9c4589926ce7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Views\Bills View">
+      <UniqueIdentifier>{87d70ae9-584d-4290-bd0b-19a29f095ae1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Views\Assignments Views">
+      <UniqueIdentifier>{2158256d-00ea-4bdf-9ee2-eadc9ce88364}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Models\Assignments Models">
+      <UniqueIdentifier>{eeb0ec71-b0e4-4788-9fb0-5d18ccf40067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Controller\Assignments Controllers">
+      <UniqueIdentifier>{2127c932-bd7e-42e1-9b68-383487bece23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DueIt.cpp">
@@ -36,52 +81,106 @@
     <ClCompile Include="Task.cpp">
       <Filter>Source Files\Models</Filter>
     </ClCompile>
-    <ClCompile Include="Company.cpp">
-      <Filter>Source Files\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Job.cpp">
-      <Filter>Source Files\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Assignment.cpp">
-      <Filter>Source Files\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Payment.cpp">
-      <Filter>Source Files\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Course.cpp">
-      <Filter>Source Files\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="CourseMeeting.cpp">
-      <Filter>Source Files\Models</Filter>
-    </ClCompile>
     <ClCompile Include="Schedule.cpp">
       <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="AssignmentTask.cpp">
+      <Filter>Source Files\Models\Assignments Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Course.cpp">
+      <Filter>Source Files\Models\Assignments Models</Filter>
+    </ClCompile>
+    <ClCompile Include="CourseMeeting.cpp">
+      <Filter>Source Files\Models\Assignments Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Company.cpp">
+      <Filter>Source Files\Models\Bills Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Job.cpp">
+      <Filter>Source Files\Models\Bills Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Payment.cpp">
+      <Filter>Source Files\Models\Bills Models</Filter>
+    </ClCompile>
+    <ClCompile Include="AssignmentDBRetriever.cpp">
+      <Filter>Source Files\Models\Assignments Models</Filter>
+    </ClCompile>
+    <ClCompile Include="AssignmentDBManipulator.cpp">
+      <Filter>Source Files\Controller\Assignments Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="AddAssignmentsController.cpp">
+      <Filter>Source Files\Controller\Assignments Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="AddAssignmentsView.cpp">
+      <Filter>Source Files\Views\Assignments Views</Filter>
+    </ClCompile>
+    <ClCompile Include="AddCourseController.cpp">
+      <Filter>Source Files\Controller\Assignments Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="AddCourseView.cpp">
+      <Filter>Source Files\Views\Assignments Views</Filter>
+    </ClCompile>
+    <ClCompile Include="CompletedAssignmentsTasks.cpp">
+      <Filter>Source Files\Views\Assignments Views</Filter>
+    </ClCompile>
+    <ClCompile Include="AssignmentsList.cpp">
+      <Filter>Source Files\Views\Assignments Views</Filter>
+    </ClCompile>
+    <ClCompile Include="CurrentAssignmentsTasks.cpp">
+      <Filter>Source Files\Views\Assignments Views</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Task.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Job.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Company.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Payment.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Assignment.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Course.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CourseMeeting.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Schedule.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AssignmentDBRetriever.h">
+      <Filter>Header Files\Model\Assignments</Filter>
+    </ClInclude>
+    <ClInclude Include="AssignmentTask.h">
+      <Filter>Header Files\Model\Assignments</Filter>
+    </ClInclude>
+    <ClInclude Include="Course.h">
+      <Filter>Header Files\Model\Assignments</Filter>
+    </ClInclude>
+    <ClInclude Include="CourseMeeting.h">
+      <Filter>Header Files\Model\Assignments</Filter>
+    </ClInclude>
+    <ClInclude Include="AssignmentDBManipulator.h">
+      <Filter>Header Files\Controller\Assignments</Filter>
+    </ClInclude>
+    <ClInclude Include="AddCourseController.h">
+      <Filter>Header Files\Controller\Assignments</Filter>
+    </ClInclude>
+    <ClInclude Include="AddAssignmentsController.h">
+      <Filter>Header Files\Controller\Assignments</Filter>
+    </ClInclude>
+    <ClInclude Include="CurrentAssignmentsTasks.h">
+      <Filter>Header Files\View\Assignments</Filter>
+    </ClInclude>
+    <ClInclude Include="CompletedAssignmentsTasks.h">
+      <Filter>Header Files\View\Assignments</Filter>
+    </ClInclude>
+    <ClInclude Include="AssignmentsList.h">
+      <Filter>Header Files\View\Assignments</Filter>
+    </ClInclude>
+    <ClInclude Include="AddCourseView.h">
+      <Filter>Header Files\View\Assignments</Filter>
+    </ClInclude>
+    <ClInclude Include="AddAssignmentsView.h">
+      <Filter>Header Files\View\Assignments</Filter>
+    </ClInclude>
+    <ClInclude Include="Company.h">
+      <Filter>Header Files\Model\Bills</Filter>
+    </ClInclude>
+    <ClInclude Include="Job.h">
+      <Filter>Header Files\Model\Bills</Filter>
+    </ClInclude>
+    <ClInclude Include="Payment.h">
+      <Filter>Header Files\Model\Bills</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
