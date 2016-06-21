@@ -23,6 +23,15 @@ namespace DueItModel
 		return formattedTime.str();
 	}
 
+	bool Task::operator==(const Task & rhs)
+	{
+		if (startTime == rhs.getTime() && day == rhs.getDay() && month == rhs.getMonth() && year == rhs.getYear())
+		{
+			return true;
+		}
+		return false;
+	}
+
 	void Task::setTime(int newTime)
 	{
 		if (newTime < 0 || newTime > 86399)

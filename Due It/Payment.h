@@ -12,13 +12,14 @@ namespace DueItModel
 		~Payment();
 		std::string toString();
 		void setAmount(double newAmount);
-		double getAmount();
+		double getAmount() const;
 		void setIsPaid(bool paidStatus);
-		bool getIsPaid();
+		bool getIsPaid() const;
 		void setCompany(Company aCompany);
-		Company getCompany();
-		void setAccountType(std::string newType);
-		std::string getAccountType();
+		Company getCompany() const;
+		void setAccountType(const std::string& newType);
+		std::string getAccountType() const;
+		bool operator==(const Payment& rhs);
 
 	private:
 		double amount; // amount < 0 if money is owed to company, amount > 0 if company is paying the user

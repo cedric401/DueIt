@@ -126,7 +126,7 @@ namespace DueItModel
 			}
 		}
 		std::stringstream formattedTime;
-		formattedTime << "Shift beginning time: " << (startTime / 3600) << ":" << ((startTime % 3600) / 60) << ":" << (startTime % 60) <<
+		formattedTime << "Shift for " << employer.getCompanyName() << " beginning time: " << (startTime / 3600) << ":" << ((startTime % 3600) / 60) << ":" << (startTime % 60) <<
 			" on " << month << "/" << day << "/" << year << " and ends at " << (endTime / 3600) << ":" << ((endTime % 3600) / 60) << ":" 
 			<< (endTime % 60) << " on " << endMonth << "/" << endDay << "/" << endYear << "\n";
 		return formattedTime.str();
@@ -179,6 +179,16 @@ namespace DueItModel
 	float Job::getRate() const
 	{
 		return rate;
+	}
+
+	bool Job::operator==(const Job & rhs)
+	{
+		if (startTime == rhs.getTime() && day == rhs.getDay() && month == rhs.getMonth() && year == rhs.getYear() && endTime == rhs.getEnd() &&
+			hours == rhs.getHours() && rate == rhs.getRate() && employer == rhs.getEmployer())
+		{
+			return true;
+		}
+		return false;
 	}
 
 	void Job::createEntry()

@@ -129,6 +129,9 @@
     <ClCompile Include="CurrentAssignmentsTasks.cpp">
       <Filter>Source Files\Views\Assignments Views</Filter>
     </ClCompile>
+    <ClCompile Include="Console_Controller.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Task.h">
@@ -181,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="Payment.h">
       <Filter>Header Files\Model\Bills</Filter>
+    </ClInclude>
+    <ClInclude Include="Console_Controller.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

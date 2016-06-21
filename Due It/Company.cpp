@@ -23,21 +23,29 @@ namespace DueItModel
 	{
 		return "Company: " + companyName;
 	}
-	void Company::setCompanyName(std::string newName)
+	void Company::setCompanyName(const std::string& newName)
 	{
 		companyName = newName;
 	}
-	std::string Company::getCompanyName()
+	std::string Company::getCompanyName() const
 	{
 		return companyName;
 	}
-	void Company::setCompanyAddress(std::string newAddress)
+	void Company::setCompanyAddress(const std::string& newAddress)
 	{
 		companyAddress = newAddress;
 	}
-	std::string Company::getCompanyAddress()
+	std::string Company::getCompanyAddress() const
 	{
 		return companyAddress;
+	}
+	bool Company::operator==(const Company & rhs)
+	{
+		if (companyName == rhs.getCompanyName() && companyAddress == rhs.getCompanyAddress())
+		{
+			return true;
+		}
+		return false;
 	}
 	void Company::createEntry()
 	{

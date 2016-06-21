@@ -41,9 +41,9 @@ namespace DueItModel
 		amount = newAmount;
 	}
 
-	double Payment::getAmount()
+	double Payment::getAmount() const
 	{
-		return 0.0;
+		return amount;
 	}
 
 	void Payment::setIsPaid(bool paidStatus)
@@ -51,7 +51,7 @@ namespace DueItModel
 		isPaid = paidStatus;
 	}
 
-	bool Payment::getIsPaid()
+	bool Payment::getIsPaid() const
 	{
 		return isPaid;
 	}
@@ -61,19 +61,29 @@ namespace DueItModel
 		company = aCompany;
 	}
 
-	Company Payment::getCompany()
+	Company Payment::getCompany() const
 	{
 		return company;
 	}
 
-	void Payment::setAccountType(std::string newType)
+	void Payment::setAccountType(const std::string& newType)
 	{
 		accountType = newType;
 	}
 
-	std::string Payment::getAccountType()
+	std::string Payment::getAccountType() const
 	{
 		return accountType;
+	}
+
+	bool Payment::operator==(const Payment & rhs)
+	{
+		if (startTime == rhs.getTime() && day == rhs.getDay() && month == rhs.getMonth() && year == rhs.getYear() && amount == rhs.getAmount() &&
+			isPaid == rhs.getIsPaid() && accountType == rhs.getAccountType() && company == rhs.getCompany())
+		{
+			return true;
+		}
+		return false;
 	}
 
 	void Payment::createEntry()

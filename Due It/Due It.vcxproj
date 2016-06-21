@@ -128,6 +128,7 @@
     <ClCompile Include="AssignmentTask.cpp" />
     <ClCompile Include="Company.cpp" />
     <ClCompile Include="CompletedAssignmentsTasks.cpp" />
+    <ClCompile Include="Console_Controller.cpp" />
     <ClCompile Include="Course.cpp" />
     <ClCompile Include="CourseMeeting.cpp" />
     <ClCompile Include="CurrentAssignmentsTasks.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="AssignmentTask.h" />
     <ClInclude Include="Company.h" />
     <ClInclude Include="CompletedAssignmentsTasks.h" />
+    <ClInclude Include="Console_Controller.h" />
     <ClInclude Include="Course.h" />
     <ClInclude Include="CourseMeeting.h" />
     <ClInclude Include="CurrentAssignmentsTasks.h" />

@@ -20,6 +20,7 @@ namespace DueItModel
 		int getHours() const;
 		void setRate(float newRate);
 		float getRate() const;
+		bool operator==(const Job& rhs);
 
 	private:
 		Company employer;
