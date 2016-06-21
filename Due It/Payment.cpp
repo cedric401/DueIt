@@ -31,7 +31,7 @@ namespace DueItModel
 			paymentStatus = "is paid";
 		}
 		std::stringstream formattedTime;
-		formattedTime << accountType << "payment of " << amount << " due at time: " << (startTime / 3600) << ":" << ((startTime % 3600) / 60) << ":" 
+		formattedTime << accountType << " payment of " << amount << " due at time: " << (startTime / 3600) << ":" << ((startTime % 3600) / 60) << ":" 
 			<< (startTime % 60) << " on " << month << "/" << day << "/" << year << " to " << company.getCompanyName() << " and " << paymentStatus <<  ".\n";
 		return formattedTime.str();
 	}

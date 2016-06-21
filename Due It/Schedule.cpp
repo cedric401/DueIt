@@ -100,7 +100,6 @@ namespace DueItModel
 	string Schedule::toString()
 	{
 		string tasksString = "Current Schedule: \n";
-
 		for (Task * aTask : currentSchedule)
 		{
 			tasksString += aTask->toString();
