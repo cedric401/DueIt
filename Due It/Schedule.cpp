@@ -74,7 +74,7 @@ namespace DueItModel
 			taskType = typeid(CourseMeeting).name();
 			break;
 		case 4:
-			taskType = typeid(Assignment).name();
+			taskType = typeid(AssignmentTask).name();
 			break;
 		}
 

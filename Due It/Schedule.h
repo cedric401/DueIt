@@ -4,7 +4,7 @@
 #include "Job.h"
 #include "Payment.h"
 #include "CourseMeeting.h"
-#include "Assignment.h"
+#include "AssignmentTask.h"
 
 namespace DueItModel
 {
