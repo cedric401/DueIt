@@ -307,4 +307,16 @@
  +# Executables
  +*.exe
  +*.out
- +*.app 
+ -Debug/Due It.exe
+ -Debug/Due It.pdb
+ -Due It/Debug/Assignment.obj
+ -*.obj
+ -*.log
+ -*.tlog
+ -*.idb
+ -*.pdb
+ -Due It/Due It.vcxproj
+ -Due It/Due It.vcxproj.filters
+ -*.ilk
+ -*.exe
+ -*.suo 
