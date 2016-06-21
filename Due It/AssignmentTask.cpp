@@ -27,16 +27,20 @@ namespace DueItModel
 	void AssignmentTask::setEstimatedTimeToComplete(int newTime)
 	{
 	}
-	int AssignmentTask::getEstimatedTimeToComplete()
+	int AssignmentTask::getEstimatedTimeToComplete() const
 	{
 		return 0;
 	}
-	void AssignmentTask::setDetails(std::string newDetails)
+	void AssignmentTask::setDetails(const std::string& newDetails)
 	{
 	}
-	std::string AssignmentTask::getDetails()
+	std::string AssignmentTask::getDetails() const
 	{
 		return std::string();
+	}
+	bool AssignmentTask::operator==(const AssignmentTask& rhs)
+	{
+		return false;
 	}
 	void AssignmentTask::createEntry()
 	{

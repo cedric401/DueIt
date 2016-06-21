@@ -11,12 +11,12 @@ namespace DueItModel
 		~AssignmentTask();
 		std::string toString();
 		void setCourse(Course newCourse);
-		Course getCourse() const;
+		Course getCourse();
 		void setEstimatedTimeToComplete(int newTime);
 		int getEstimatedTimeToComplete() const;
 		void setDetails(const std::string& newDetails);
 		std::string getDetails() const;
-		bool operator==(const Assignment& rhs);
+		bool operator==(const AssignmentTask& rhs);
 
 	private:
 		Course course;
