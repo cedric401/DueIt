@@ -307,6 +307,8 @@
  +# Executables
  +*.exe
  +*.out
+ +*.app
+ -.vs/Due It/v14/.suo
  -Debug/Due It.exe
  -Debug/Due It.pdb
  -Due It/Debug/Assignment.obj
