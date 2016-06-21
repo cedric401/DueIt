@@ -11,7 +11,7 @@ Console_Controller::Console_Controller(Schedule model)
 	while (continueResponse != 'q')
 	{
 		printTime();
-		cout << "Enter a command: ";
+		cout << "Enter a command (l for a list of commands): ";
 		cin >> continueResponse;
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -24,6 +24,9 @@ Console_Controller::Console_Controller(Schedule model)
 			break;
 		case 'p': //Print Schedule
 			cout << tasks.toString();
+			break;
+		case 'l': //List commands
+			cout << "'q' - Quit program   'a' - Add task(s) to schedule   'p' - Print schedule\n";
 			break;
 		}
 	}
@@ -71,8 +74,8 @@ void Console_Controller::printTime()
 
 void Console_Controller::createTask()
 {
-	char response = '~';
-	while (response != 'j' && response != 'p' && response != 'a' && response != 'c')
+	char response = 'r';
+	while (true)
 	{
 		cout << "Select task type (j=job, p=payment, a=assignment, c=class), r to return: ";
 		cin >> response;
@@ -84,22 +87,24 @@ void Console_Controller::createTask()
 			return;
 		case 'j':
 			createJob();
+			cout << "Task added. \n";
 			break;
 		case 'p':
 			createPayment();
+			cout << "Task added. \n";
 			break;
 		case 'a':
 			createAssignment();
+			cout << "Task added. \n";
 			break;
 		case 'c':
 			createCourseMeeting();
+			cout << "Task added. \n";
+			break;
+		default:
+			cout << "Invalid input. \n";
 			break;
 		}
-
-		cout << "Task added. Press any key to continue, or r to stop: ";
-		cin >> response;
-		cin.clear();
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	}
 }
 
