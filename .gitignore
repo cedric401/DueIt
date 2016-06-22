@@ -12,3 +12,5 @@ Due It/Due It.vcxproj.filters
 *.ilk
 *.exe
 *.suo
+*.suo
+Due It.VC.db
