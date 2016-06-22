@@ -137,6 +137,7 @@
     <ClCompile Include="Payment.cpp" />
     <ClCompile Include="Schedule.cpp" />
     <ClCompile Include="Task.cpp" />
+    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddAssignmentsController.h" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Payment.h" />
     <ClInclude Include="Schedule.h" />
     <ClInclude Include="Task.h" />
+    <ClInclude Include="test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
