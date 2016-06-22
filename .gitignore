@@ -7,8 +7,6 @@ Due It/Debug/Assignment.obj
 *.tlog
 *.idb
 *.pdb
-Due It/Due It.vcxproj
-Due It/Due It.vcxproj.filters
 *.ilk
 *.exe
 *.suo
