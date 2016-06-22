@@ -132,12 +132,6 @@
     <ClCompile Include="Console_Controller.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="asdf.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="kjh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Task.h">
@@ -192,12 +186,6 @@
       <Filter>Header Files\Model\Bills</Filter>
     </ClInclude>
     <ClInclude Include="Console_Controller.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="asdf.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="kjh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
