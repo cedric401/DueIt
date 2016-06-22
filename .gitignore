@@ -16,3 +16,4 @@ Due It/Due It.vcxproj.filters
 Due It.VC.db
 .vs/Due It/v14/.suo
 Due It.VC.db
+*.opendb
