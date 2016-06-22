@@ -23,10 +23,6 @@ namespace DueItModel
 		int estTimeToComplete;
 		std::string assignmentDetails;
 		int rowID;
-		void createEntry();
-		void deleteEntry();
-		void updateEntry();
-		void readEntry(int row);
 	};
 };
 
