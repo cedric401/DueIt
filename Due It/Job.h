@@ -8,7 +8,7 @@ namespace DueItModel
 	{
 	public:
 		Job(int dbRowID);
-		Job(int startingTime, int endingTime, int workDay, int mnth, int yr, Company jobEmployer, int hrs, float hrlyRate);
+		Job(int startingTime, int endingTime, int workDay, int mnth, int yr, bool repeating, int daysInterval, int monthsInterval, Company jobEmployer, int hrs, float hrlyRate);
 		~Job();
 		float calcPay();
 		std::string toString();

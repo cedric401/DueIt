@@ -110,7 +110,8 @@ void Console_Controller::createTask()
 
 void Console_Controller::createJob()
 {
-	int startSeconds, endSeconds, day, month, year, hours;
+	int startSeconds, endSeconds, day, month, year, hours, repeatInDays, repeatInMonths;
+	bool repeat;
 	float rate;
 	cout << "Enter starting time in seconds (0 to 86,399): ";
 	cin >> startSeconds;
@@ -126,8 +127,28 @@ void Console_Controller::createJob()
 	cin >> hours;
 	cout << "Enter hourly pay rate: ";
 	cin >> rate;
+	cout << "Does this Job repeat regularly? (y/n): ";
+	char repeatResp;
+	cin >> repeatResp;
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	if (repeatResp != 'y')
+	{
+		repeat = false;
+		repeatInDays = 0;
+		repeatInMonths = 0;
+	}
+	else
+	{
+		repeat = true;
+		cout << "Enter number of days until it repeats: ";
+		cin >> repeatInDays;
+		cout << "Enter number of months until it repeats: ";
+		cin >> repeatInMonths;
+	}
+	
 	Job *newJob;
-	newJob = new Job(startSeconds, endSeconds, day, month, year, Company(), hours, rate);
+	newJob = new Job(startSeconds, endSeconds, day, month, year, repeat, repeatInDays, repeatInMonths, Company(), hours, rate);
 	tasks.addTask(newJob);
 }
 
@@ -143,7 +164,8 @@ void Console_Controller::createCourseMeeting()
 
 void Console_Controller::createPayment()
 {
-	int startSeconds, day, month, year;
+	int startSeconds, day, month, year, repeatInDays, repeatInMonths;
+	bool repeat;
 	double amount;
 	string accountType;
 	cout << "Enter starting time in seconds (0 to 86,399): ";
@@ -158,7 +180,26 @@ void Console_Controller::createPayment()
 	cin >> amount;
 	cout << "Enter account type: ";
 	cin >> accountType;
+	cout << "Does this Payment repeat regularly? (y/n): ";
+	char repeatResp;
+	cin >> repeatResp;
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	if (repeatResp != 'y')
+	{
+		repeat = false;
+		repeatInDays = 0;
+		repeatInMonths = 0;
+	}
+	else
+	{
+		repeat = true;
+		cout << "Enter number of days until it repeats: ";
+		cin >> repeatInDays;
+		cout << "Enter number of months until it repeats: ";
+		cin >> repeatInMonths;
+	}
 	Payment *newPayment;
-	newPayment = new Payment(startSeconds, day, month, year, Company(), amount, false, accountType);
+	newPayment = new Payment(startSeconds, day, month, year, repeat, repeatInDays, repeatInMonths, Company(), amount, false, accountType);
 	tasks.addTask(newPayment);
 }

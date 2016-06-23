@@ -7,10 +7,11 @@ namespace DueItModel
 		public Task
 	{
 	public:
-		Payment(int startingTime, int paymentDay, int mnth, int yr, Company aCompany, double paymentAmount, bool paidStatus, std::string anAccountType);
+		Payment(int startingTime, int paymentDay, int mnth, int yr, bool repeating, int daysInterval, int monthsInterval, Company aCompany, double paymentAmount, bool paidStatus, std::string anAccountType);
 		Payment(int dbRowID);
 		~Payment();
 		std::string toString();
+		void repeat();
 		void setAmount(double newAmount);
 		double getAmount() const;
 		void setIsPaid(bool paidStatus);

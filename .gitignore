@@ -322,3 +322,13 @@
  -*.ilk
  -*.exe
  -*.suo 
+*.suo
+*.sdf
+*.obj
+*.tlog
+*.pdb
+*.ilk
+*.exe
+*.idb
+*.log
+*.opensdf
