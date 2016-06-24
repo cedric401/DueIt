@@ -170,7 +170,10 @@ namespace DueItModel
 
 	void Task::setYear(int newYear)
 	{
-		year = newYear;
+		if (newYear >= 2000 && newYear <= 2100)
+		{
+			year = newYear;
+		}
 	}
 
 	int Task::getYear() const

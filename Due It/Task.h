@@ -8,7 +8,7 @@ namespace DueItModel
 		int startTime; //0 <= startTime <= 86,399 (86,400 seconds in a day)
 		int day; //1 <= day <= 31
 		int month; //1 <= month <= 12
-		int year;
+		int year; //2000 <= year <= 2100
 		bool isRepeating;
 		int daysToRepeat; //0 if task repeats in an interval of months rather than days.
 		int monthsToRepeat; //0 if task repeats in an interval of days rather than months.
