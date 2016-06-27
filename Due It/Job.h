@@ -21,6 +21,10 @@ namespace DueItModel
 		void setRate(float newRate);
 		float getRate() const;
 		bool operator==(const Job& rhs);
+		void createEntry();
+		void deleteEntry();
+		void updateEntry();
+		void readEntry(int row);
 
 	private:
 		Company employer;
@@ -28,10 +32,6 @@ namespace DueItModel
 		int hours; //0 <= hours
 		float rate; //0 <= rate
 		int rowID; //To identify the corresponding location in the database where the Job information is stored
-		void createEntry();
-		void deleteEntry();
-		void updateEntry();
-		void readEntry(int row);
 	};
 };
 

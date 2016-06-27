@@ -34,8 +34,6 @@ namespace DueItModel
 		int getDaysToRepeat() const;
 		void setMonthsToRepeat(int newMonthInterval);
 		int getMonthsToRepeat() const;
-
-	private:
 		virtual void createEntry();
 		virtual void deleteEntry();
 		virtual void updateEntry();

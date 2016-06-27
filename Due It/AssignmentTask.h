@@ -17,16 +17,16 @@ namespace DueItModel
 		void setDetails(const std::string& newDetails);
 		std::string getDetails() const;
 		bool operator==(const AssignmentTask& rhs);
+		void createEntry();
+		void deleteEntry();
+		void updateEntry();
+		void readEntry(int row);
 
 	private:
 		Course course;
 		int estTimeToComplete;
 		std::string assignmentDetails;
 		int rowID;
-		void createEntry();
-		void deleteEntry();
-		void updateEntry();
-		void readEntry(int row);
 	};
 };
 

@@ -2,6 +2,7 @@
 #include "Schedule.h"
 #include <sstream>
 #include <ctime>
+#include <algorithm>
 using namespace std;
 
 namespace DueItModel
@@ -9,9 +10,7 @@ namespace DueItModel
 	Schedule::Schedule()
 	{
 		currentSchedule = vector<Task *>();
-		time_t now;
-		time(&now);
-		currentTime = localtime(&now);
+		updateTime();
 	}
 
 	Schedule::~Schedule()
@@ -22,6 +21,29 @@ namespace DueItModel
 		time_t now;
 		time(&now);
 		currentTime = localtime(&now);
+	}
+	void Schedule::updateSchedule()
+	{
+		updateTime();
+		for (std::vector<Task *>::iterator iter = currentSchedule.begin(); iter != currentSchedule.end(); ++iter)
+		{
+			if ((*iter)->hasPassed((currentTime->tm_hour * 3600) + (currentTime->tm_min * 60) + currentTime->tm_sec, 
+				currentTime->tm_mday, currentTime->tm_mon + 1, currentTime->tm_year + 1900))
+			{
+				if ((*iter)->getIsRepeating())
+				{
+					(*iter)->updateEntry();
+					currentSchedule.erase(iter);
+					delete (*iter);
+				}
+				else
+				{
+					(*iter)->deleteEntry();
+					currentSchedule.erase(iter);
+					delete (*iter);
+				}
+			}
+		}
 	}
 	void Schedule::addTask(Task * newTask)
 	{
@@ -123,9 +145,9 @@ namespace DueItModel
 	}
 	void Schedule::sortTasks()
 	{
-		//Radix sort w/ count sort for days, months, then years
-		//TODO: Include sorting for seconds time.
-
+		//Radix sort w/ std::sort for seconds, count sort for days, months, then years (count sort for seconds would require a large counting array for even small n)
+		//Sort by seconds:
+		std::sort(currentSchedule.begin(), currentSchedule.end(), [](Task * lhs, Task * rhs) -> bool {return lhs->getTime() < rhs->getTime(); });
 		int n = currentSchedule.size();
 		//Sort by day:
 		vector<Task*> sorted(n);

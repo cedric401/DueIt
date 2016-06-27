@@ -16,6 +16,7 @@ namespace DueItModel
 
 	Task::~Task()
 	{
+
 	}
 
 	std::string Task::toString()
