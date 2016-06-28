@@ -23,6 +23,7 @@ Console_Controller::Console_Controller(Schedule model)
 			createTask();
 			break;
 		case 'p': //Print Schedule
+			tasks.updateSchedule();
 			cout << tasks.toString();
 			break;
 		case 'l': //List commands

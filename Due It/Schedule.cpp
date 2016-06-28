@@ -25,7 +25,7 @@ namespace DueItModel
 	void Schedule::updateSchedule()
 	{
 		updateTime();
-		for (std::vector<Task *>::iterator iter = currentSchedule.begin(); iter != currentSchedule.end(); ++iter)
+		for (std::vector<Task *>::iterator iter = currentSchedule.begin(); iter != currentSchedule.end();)
 		{
 			if ((*iter)->hasPassed((currentTime->tm_hour * 3600) + (currentTime->tm_min * 60) + currentTime->tm_sec, 
 				currentTime->tm_mday, currentTime->tm_mon + 1, currentTime->tm_year + 1900))
@@ -33,15 +33,19 @@ namespace DueItModel
 				if ((*iter)->getIsRepeating())
 				{
 					(*iter)->updateEntry();
-					currentSchedule.erase(iter);
 					delete (*iter);
+					iter = currentSchedule.erase(iter);
 				}
 				else
 				{
 					(*iter)->deleteEntry();
-					currentSchedule.erase(iter);
 					delete (*iter);
+					iter = currentSchedule.erase(iter);
 				}
+			}
+			else
+			{
+				iter++;
 			}
 		}
 	}
@@ -51,13 +55,17 @@ namespace DueItModel
 	}
 	void Schedule::deleteTask(Task * aTask)
 	{
-		for (std::vector<Task *>::iterator iter = currentSchedule.begin(); iter != currentSchedule.end(); ++iter)
+		for (std::vector<Task *>::iterator iter = currentSchedule.begin(); iter != currentSchedule.end();)
 		{
 			if (*iter == aTask)
 			{
-				currentSchedule.erase(iter);
 				delete aTask;
+				iter = currentSchedule.erase(iter);
 				break;
+			}
+			else
+			{
+				iter++;
 			}
 		}
 	}
