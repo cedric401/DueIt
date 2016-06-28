@@ -16,15 +16,15 @@ namespace DueItModel
 		void setCourse(Course newCourse);
 		Course getCourse() const;
 		bool operator==(const CourseMeeting& rhs);
+		void createEntry();
+		void deleteEntry();
+		void updateEntry();
+		void readEntry(int courseID);
 
 	private:
 		int endTime;
 		Course course;
 		int rowID;
-		void createEntry();
-		void deleteEntry();
-		void updateEntry();
-		void readEntry(int courseID);
 	};
 };
 

@@ -14,6 +14,7 @@ namespace DueItModel
 		Schedule();
 		~Schedule();
 		void updateTime();
+		void updateSchedule();
 		void addTask(Task * newTask);
 		void deleteTask(Task * aTask);
 		void deleteAllTasksForCourse(int courseNumber);

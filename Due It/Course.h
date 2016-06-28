@@ -14,14 +14,14 @@ namespace DueItModel
 		void setCourseName(const std::string& newName);
 		std::string getCourseName() const;
 		bool operator==(const Course& rhs);
-
-	private:
-		int courseNumber;
-		std::string courseName;
 		void createEntry();
 		void deleteEntry();
 		void updateEntry();
 		void readEntry(int courseID);
+
+	private:
+		int courseNumber;
+		std::string courseName;
 	};
 };
 

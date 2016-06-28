@@ -7,10 +7,11 @@ namespace DueItModel
 		public Task
 	{
 	public:
-		Payment(int startingTime, int paymentDay, int mnth, int yr, Company aCompany, double paymentAmount, bool paidStatus, std::string anAccountType);
+		Payment(int startingTime, int paymentDay, int mnth, int yr, bool repeating, int daysInterval, int monthsInterval, Company aCompany, double paymentAmount, bool paidStatus, std::string anAccountType);
 		Payment(int dbRowID);
 		~Payment();
 		std::string toString();
+		void repeat();
 		void setAmount(double newAmount);
 		double getAmount() const;
 		void setIsPaid(bool paidStatus);
@@ -20,6 +21,10 @@ namespace DueItModel
 		void setAccountType(const std::string& newType);
 		std::string getAccountType() const;
 		bool operator==(const Payment& rhs);
+		void createEntry();
+		void deleteEntry();
+		void updateEntry();
+		void readEntry(int row);
 
 	private:
 		double amount; // amount < 0 if money is owed to company, amount > 0 if company is paying the user
@@ -27,10 +32,6 @@ namespace DueItModel
 		Company company;
 		std::string accountType;
 		int rowID;
-		void createEntry();
-		void deleteEntry();
-		void updateEntry();
-		void readEntry(int row);
 	};
 };
 
