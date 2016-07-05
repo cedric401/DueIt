@@ -54,11 +54,13 @@ string AddAssignmentsController::getMaterial()
 	@requestedMinute, minute of the due-date to be verified.
 	@return a string of the due-date.
 ******************************************************************************/
-void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth, 
-						int requestedDay, int requestedHour, int requestedMinute)
+void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
+	int requestedDay, int requestedHour, int requestedMinute)
 {
-	enum months {January = 1, February, March, April, May, June, 
-		July, August, September, October, November, December};
+	enum months {
+		January = 1, February, March, April, May, June,
+		July, August, September, October, November, December
+	};
 	time_t theTime = time(NULL);					// Hold Time info.
 	struct tm *aTime = localtime(&theTime);			// Stores the current time & date.
 
@@ -66,17 +68,21 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 	int currentMonth = aTime->tm_mon + 1;			// Months range from 0-11.
 	int currentDay = aTime->tm_mday;				// Store current date.
 
-	int currentHour = aTime->tm_hour;		
+	int currentHour = aTime->tm_hour;
 	int currentMinute = aTime->tm_min;
-	//int currentSecond = aTime->tm_sec +;
 
 	string fail = "NO-DUEDATE";
 
 	// switch fields, can't be declared in the cases.
-	int leapYear = (currentYear % 4);				
+	int leapYear = (currentYear % 4);
 	bool today = false;
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/* The first condition checks for dates being assigned in the same month and year. 
+		Days are compared to make the the requested date is not a day in the past.
+		
+		The second condition checks for requested dates in the future, days do not
+		need to be compared to the current date in those cases.
+	*/
 	if ((requestedYear == currentYear) && (requestedMonth == currentMonth))
 	{
 		switch (requestedMonth)
@@ -444,8 +450,8 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 		case January: ///////////////////////JANUARY//////////////////////////////////
 			if ((requestedDay <= 31) && (requestedDay >= 1))
 			{
-					dueDate = dateTimeString("January", requestedDay, requestedYear,
-						requestedHour, requestedMinute, currentHour, currentMinute, today);
+				dueDate = dateTimeString("January", requestedDay, requestedYear,
+					requestedHour, requestedMinute, currentHour, currentMinute, today);
 			}
 			else
 			{
@@ -459,8 +465,8 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 			{
 				if ((requestedDay <= 29) && (requestedDay >= 1))
 				{
-						dueDate = dateTimeString("February", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
+					dueDate = dateTimeString("February", requestedDay, requestedYear,
+						requestedHour, requestedMinute, currentHour, currentMinute, today);
 				}// end-of 29 if.
 				else
 				{
@@ -471,8 +477,8 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 			{
 				if ((requestedDay <= 28) && (requestedDay >= 1))
 				{
-						dueDate = dateTimeString("February", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
+					dueDate = dateTimeString("February", requestedDay, requestedYear,
+						requestedHour, requestedMinute, currentHour, currentMinute, today);
 				}
 				else
 				{
@@ -485,8 +491,8 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 
 			if ((requestedDay <= 31) && (requestedDay >= 1))
 			{
-					dueDate = dateTimeString("March", requestedDay, requestedYear,
-						requestedHour, requestedMinute, currentHour, currentMinute, today);
+				dueDate = dateTimeString("March", requestedDay, requestedYear,
+					requestedHour, requestedMinute, currentHour, currentMinute, today);
 			}
 			else
 			{
@@ -497,8 +503,8 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 		case April: /////////////////////////////APRIL//////////////////////////////
 			if ((requestedDay <= 30) && (requestedDay >= 1))
 			{
-					dueDate = dateTimeString("April", requestedDay, requestedYear,
-						requestedHour, requestedMinute, currentHour, currentMinute, today);
+				dueDate = dateTimeString("April", requestedDay, requestedYear,
+					requestedHour, requestedMinute, currentHour, currentMinute, today);
 			}
 			else
 			{
@@ -510,8 +516,8 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 
 			if ((requestedDay <= 31) && (requestedDay >= 1))
 			{
-					dueDate = dateTimeString("May", requestedDay, requestedYear,
-						requestedHour, requestedMinute, currentHour, currentMinute, today);
+				dueDate = dateTimeString("May", requestedDay, requestedYear,
+					requestedHour, requestedMinute, currentHour, currentMinute, today);
 			}
 			else
 			{
@@ -523,8 +529,8 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 
 			if ((requestedDay <= 30) && (requestedDay >= 1))
 			{
-					dueDate = dateTimeString("June", requestedDay, requestedYear,
-						requestedHour, requestedMinute, currentHour, currentMinute, today);
+				dueDate = dateTimeString("June", requestedDay, requestedYear,
+					requestedHour, requestedMinute, currentHour, currentMinute, today);
 			}
 			else
 			{
@@ -536,8 +542,8 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 
 			if ((requestedDay <= 31) && (requestedDay >= 1))
 			{
-					dueDate = dateTimeString("July", requestedDay, requestedYear,
-						requestedHour, requestedMinute, currentHour, currentMinute, today);
+				dueDate = dateTimeString("July", requestedDay, requestedYear,
+					requestedHour, requestedMinute, currentHour, currentMinute, today);
 			}
 			else
 			{
@@ -549,8 +555,8 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 
 			if ((requestedDay <= 31) && (requestedDay >= 1))
 			{
-					dueDate = dateTimeString("August", requestedDay, requestedYear,
-						requestedHour, requestedMinute, currentHour, currentMinute, today);
+				dueDate = dateTimeString("August", requestedDay, requestedYear,
+					requestedHour, requestedMinute, currentHour, currentMinute, today);
 			}
 			else
 			{
@@ -562,8 +568,8 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 
 			if ((requestedDay <= 30) && (requestedDay >= 1))
 			{
-					dueDate = dateTimeString("September", requestedDay, requestedYear,
-						requestedHour, requestedMinute, currentHour, currentMinute, today);
+				dueDate = dateTimeString("September", requestedDay, requestedYear,
+					requestedHour, requestedMinute, currentHour, currentMinute, today);
 			}
 			else
 			{
@@ -575,8 +581,8 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 
 			if ((requestedDay <= 31) && (requestedDay >= 1))
 			{
-					dueDate = dateTimeString("October", requestedDay, requestedYear,
-						requestedHour, requestedMinute, currentHour, currentMinute, today);
+				dueDate = dateTimeString("October", requestedDay, requestedYear,
+					requestedHour, requestedMinute, currentHour, currentMinute, today);
 			}
 			else
 			{
@@ -588,8 +594,8 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 
 			if ((requestedDay <= 30) && (requestedDay >= 1))
 			{
-					dueDate = dateTimeString("November", requestedDay, requestedYear,
-						requestedHour, requestedMinute, currentHour, currentMinute, today);
+				dueDate = dateTimeString("November", requestedDay, requestedYear,
+					requestedHour, requestedMinute, currentHour, currentMinute, today);
 			}
 			else
 			{
@@ -601,8 +607,8 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 
 			if ((requestedDay <= 31) && (requestedDay >= 1))
 			{
-					dueDate = dateTimeString("December", requestedDay, requestedYear,
-						requestedHour, requestedMinute, currentHour, currentMinute, today);
+				dueDate = dateTimeString("December", requestedDay, requestedYear,
+					requestedHour, requestedMinute, currentHour, currentMinute, today);
 			}
 			else
 			{
@@ -615,377 +621,6 @@ void AddAssignmentsController::setDueDate(int requestedYear, int requestedMonth,
 			break;
 		}// end-of switch.
 	}// end-of if (((requestedYear == currentYear) && (requestedMonth > currentMonth)) || (requestedYear > currentYear))
-	else
-	{
-		dueDate = fail;
-	}
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-	// Check that the assigned Month and Year is not a previous Month and Year.
-	if ((requestedYear >= currentYear) && (requestedMonth >= currentMonth))
-	{
-			// Check that the current day is not a previous day.
-			// When the assigned day is in the future, store the due date of the assignment.
-			switch (requestedMonth)
-			{
-			case January: ///////////////////////JANUARY//////////////////////////////////
-				if (requestedDay <= 31)
-				{
-					if (requestedDay > currentDay)
-					{
-						dueDate = dateTimeString("January", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else if (requestedDay == currentDay)
-					{
-						today = true;
-
-						dueDate = dateTimeString("January", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else
-					{
-						dueDate = fail;
-					}
-				}
-				else
-				{
-					dueDate = fail;
-				}
-				break;
-
-			case February: ////////////////////////FEBRUARY////////////////////////////////
-
-				if (leapYear == 0)
-				{
-					if (requestedDay <= 29)
-					{
-						if (requestedDay > currentDay)
-						{
-							dueDate = dateTimeString("February", requestedDay, requestedYear,
-								requestedHour, requestedMinute, currentHour, currentMinute, today);
-						}
-						else if (requestedDay == currentDay)
-						{
-							today = true;
-
-							dueDate = dateTimeString("February", requestedDay, requestedYear,
-								requestedHour, requestedMinute, currentHour, currentMinute, today);
-						}
-						else
-						{
-							dueDate = fail;
-						}
-					}// end-of 29 if.
-					else
-					{
-						dueDate = fail;
-					}
-				}// end-of leapyear if.
-				else
-				{
-					if (requestedDay <= 28)
-					{
-						if (requestedDay > currentDay)
-						{
-							dueDate = dateTimeString("February", requestedDay, requestedYear,
-								requestedHour, requestedMinute, currentHour, currentMinute, today);
-						}
-						else if (requestedDay == currentDay)
-						{
-							today = true;
-
-							dueDate = dateTimeString("February", requestedDay, requestedYear,
-								requestedHour, requestedMinute, currentHour, currentMinute, today);
-						}
-						else
-						{
-							dueDate = fail;
-						}
-					}
-					else
-					{
-						dueDate = fail;
-					}
-				}
-				break;
-
-			case March: /////////////////////////////MARCH//////////////////////////////
-
-				if (requestedDay <= 31)
-				{
-					if (requestedDay > currentDay)
-					{
-						dueDate = dateTimeString("March", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else if (requestedDay == currentDay)
-					{
-						today = true;
-
-						dueDate = dateTimeString("March", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else
-					{
-						dueDate = fail;
-					}
-				}
-				else
-				{
-					dueDate = fail;
-				}
-				break;
-
-			case April: /////////////////////////////APRIL//////////////////////////////
-				if (requestedDay <= 30)
-				{
-					if (requestedDay > currentDay)
-					{
-						dueDate = dateTimeString("April", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else if (requestedDay == currentDay)
-					{
-						today = true;
-
-						dueDate = dateTimeString("April", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else
-					{
-						dueDate = fail;
-					}
-				}
-				else
-				{
-					dueDate = fail;
-				}
-				break;
-
-			case May: ///////////////////////////////MAY//////////////////////////////
-
-				if (requestedDay <= 31)
-				{
-					if (requestedDay > currentDay)
-					{
-						dueDate = dateTimeString("May", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else if (requestedDay == currentDay)
-					{
-						today = true;
-
-						dueDate = dateTimeString("May", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else
-					{
-						dueDate = fail;
-					}
-				}
-				else
-				{
-					dueDate = fail;
-				}
-				break;
-
-			case June: ///////////////////////////JUNE/////////////////////////////////
-
-				if (requestedDay <= 30)
-				{
-					if (requestedDay > currentDay)
-					{
-						dueDate = dateTimeString("June", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else if (requestedDay == currentDay)
-					{
-						today = true;
-
-						dueDate = dateTimeString("June", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else
-					{
-						dueDate = fail;
-					}
-				}
-				else
-				{
-					dueDate = fail;
-				}
-				break;
-
-			case July: ////////////////////////////JULY////////////////////////////////
-
-				if (requestedDay <= 31)
-				{
-					if (requestedDay > currentDay)
-					{
-						dueDate = dateTimeString("July", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else if (requestedDay == currentDay)
-					{
-						today = true;
-
-						dueDate = dateTimeString("July", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else
-					{
-						dueDate = fail;
-					}
-				}
-				else
-				{
-					dueDate = fail;
-				}
-				break;
-
-			case August: //////////////////////////AUGUST////////////////////////////////
-
-				if (requestedDay <= 31)
-				{
-					if (requestedDay > currentDay)
-					{
-						dueDate = dateTimeString("August", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else if (requestedDay == currentDay)
-					{
-						today = true;
-
-						dueDate = dateTimeString("August", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else
-					{
-						dueDate = fail;
-					}
-				}
-				else
-				{
-					dueDate = fail;
-				}
-				break;
-
-			case September: //////////////////////////SEPTEMBER/////////////////////////////
-
-				if (requestedDay <= 30)
-				{
-					if (requestedDay > currentDay)
-					{
-						dueDate = dateTimeString("September", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else if (requestedDay == currentDay)
-					{
-						today = true;
-
-						dueDate = dateTimeString("September", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else
-					{
-						dueDate = fail;
-					}
-				}
-				else
-				{
-					dueDate = fail;
-				}
-				break;
-
-			case October: ///////////////////////////OCTOBER//////////////////////////////
-
-				if (requestedDay <= 31)
-				{
-					if (requestedDay > currentDay)
-					{
-						dueDate = dateTimeString("October", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else if (requestedDay == currentDay)
-					{
-						today = true;
-
-						dueDate = dateTimeString("October", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else
-					{
-						dueDate = fail;
-					}
-				}
-				else
-				{
-					dueDate = fail;
-				}
-				break;
-
-			case November: /////////////////////////NOVEMBER///////////////////////////////
-
-				if (requestedDay <= 30)
-				{
-					if (requestedDay > currentDay)
-					{
-						dueDate = dateTimeString("November", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else if (requestedDay == currentDay)
-					{
-						today = true;
-
-						dueDate = dateTimeString("November", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else
-					{
-						dueDate = fail;
-					}
-				}
-				else
-				{
-					dueDate = fail;
-				}
-				break;
-
-			case December: ///////////////////////////DECEMBER/////////////////////////////
-
-				if (requestedDay <= 31)
-				{
-					if (requestedDay > currentDay)
-					{
-						dueDate = dateTimeString("December", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else if (requestedDay == currentDay)
-					{
-						today = true;
-
-						dueDate = dateTimeString("December", requestedDay, requestedYear,
-							requestedHour, requestedMinute, currentHour, currentMinute, today);
-					}
-					else
-					{
-						dueDate = fail;
-					}
-				}
-				else
-				{
-					dueDate = fail;
-				}
-				break;
-
-			default:
-				dueDate = fail;
-				break;
-			}// end-of switch.
-	}
 	else
 	{
 		dueDate = fail;
@@ -1021,9 +656,9 @@ string AddAssignmentsController::dateTimeString(string month, int day, int year,
 	if ( today )
 	{
 		// When the hour is later in the day, the minutes do not need to be compared.
-		if ((rHour > cHour) && (rHour < 24))
+		if ((rHour > cHour) && (rHour < 25))
 		{
-			dateString << (month + ' ') << day << ", " << (year + ' ') <<
+			dateString << month << ' ' << day << ", " << year << ' ' <<
 				timeString(rHour, rMinute);
 		}
 		// When the hour is equal to the current hour, the minutes will need to be in the future.
@@ -1031,7 +666,7 @@ string AddAssignmentsController::dateTimeString(string month, int day, int year,
 		{
 			if ((rMinute > cMinute) && (rMinute < 60))
 			{
-				dateString << (month + ' ') << day << ", " << (year + ' ') <<
+				dateString << month << ' ' << day << ", " << year << ' ' <<
 					timeString(rHour, rMinute);
 			}
 			else
@@ -1046,7 +681,7 @@ string AddAssignmentsController::dateTimeString(string month, int day, int year,
 	}// end-of if (today)
 	else
 	{
-		dateString << (month + ' ') << day << ", " << (year + ' ') <<
+		dateString << month << ' ' << day << ", " << year << ' ' <<
 			timeString(rHour, rMinute);
 	}
 

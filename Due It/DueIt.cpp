@@ -13,11 +13,5 @@ int main()
 {
 	//Schedule model = Schedule();
 	//Console_Controller controller = Console_Controller(model);
-	int test;
-
-	AddAssignmentsController aac("Homework", 2016, 9, 10, 8, 30);
-	cout << aac.getDueDate();
-	cin >> test;
-
 	return 0;
 }
