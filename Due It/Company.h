@@ -14,14 +14,14 @@ namespace DueItModel
 		void setCompanyAddress(const std::string& newAddress);
 		std::string getCompanyAddress() const;
 		bool operator==(const Company& rhs);
-
-	private:
-		std::string companyName;
-		std::string companyAddress;
 		void createEntry();
 		void deleteEntry();
 		void updateEntry();
 		void readEntry(std::string name);
+
+	private:
+		std::string companyName;
+		std::string companyAddress;
 	};
 };
 

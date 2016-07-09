@@ -42,4 +42,16 @@ namespace DueItModel
 	{
 		return false;
 	}
+	void AssignmentTask::createEntry()
+	{
+	}
+	void AssignmentTask::deleteEntry()
+	{
+	}
+	void AssignmentTask::updateEntry()
+	{
+	}
+	void AssignmentTask::readEntry(int row)
+	{
+	}
 }

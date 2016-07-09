@@ -15,3 +15,5 @@ Due It.VC.db
 .vs/Due It/v14/.suo
 Due It.VC.db
 *.opendb
+*.opensdf
+*.sdf

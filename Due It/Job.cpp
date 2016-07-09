@@ -10,8 +10,8 @@ namespace DueItModel
 		readEntry(dbRowID);
 	}
 
-	Job::Job(int startingTime, int endingTime, int workDay, int mnth, int yr, Company jobEmployer, int hrs, float hrlyRate) 
-		: Task(startingTime, workDay, mnth, yr)
+	Job::Job(int startingTime, int endingTime, int workDay, int mnth, int yr, bool repeating, int daysInterval, int monthsInterval, Company jobEmployer, int hrs, float hrlyRate)
+		: Task(startingTime, workDay, mnth, yr, repeating, daysInterval, monthsInterval)
 	{
 		year = yr;
 		employer = jobEmployer;
@@ -125,10 +125,18 @@ namespace DueItModel
 				break;
 			}
 		}
+		std::string repeatingStatus = "does not repeat";
+		if (isRepeating)
+		{
+			std::stringstream repeatingSS;
+			repeatingSS << "repeats every " << daysToRepeat << " days and " << monthsToRepeat << " months";
+			repeatingStatus = repeatingSS.str();
+
+		}
 		std::stringstream formattedTime;
 		formattedTime << "Shift for " << employer.getCompanyName() << " beginning time: " << (startTime / 3600) << ":" << ((startTime % 3600) / 60) << ":" << (startTime % 60) <<
 			" on " << month << "/" << day << "/" << year << " and ends at " << (endTime / 3600) << ":" << ((endTime % 3600) / 60) << ":" 
-			<< (endTime % 60) << " on " << endMonth << "/" << endDay << "/" << endYear << "\n";
+			<< (endTime % 60) << " on " << endMonth << "/" << endDay << "/" << endYear << ". Job " << repeatingStatus << ".\n";
 		return formattedTime.str();
 	}
 
@@ -183,7 +191,8 @@ namespace DueItModel
 
 	bool Job::operator==(const Job & rhs)
 	{
-		if (startTime == rhs.getTime() && day == rhs.getDay() && month == rhs.getMonth() && year == rhs.getYear() && endTime == rhs.getEnd() &&
+		if (startTime == rhs.getTime() && day == rhs.getDay() && month == rhs.getMonth() && year == rhs.getYear() && isRepeating == rhs.getIsRepeating()
+			&& daysToRepeat == rhs.getDaysToRepeat() && monthsToRepeat == rhs.getMonthsToRepeat() && endTime == rhs.getEnd() &&
 			hours == rhs.getHours() && rate == rhs.getRate() && employer == rhs.getEmployer())
 		{
 			return true;
