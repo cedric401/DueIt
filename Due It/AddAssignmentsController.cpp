@@ -3,8 +3,7 @@
 AddAssignmentsController::AddAssignmentsController(string selectedMaterial, int selectedYear, 
 					int selectedMonth, int selectedDay, int selectedHour, int selectedMinute)
 {
-	setMaterial(selectedMaterial);
-	setDueDate(selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute);
+	initialize(selectedMaterial, selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute);
 }
 
 
@@ -632,6 +631,13 @@ string AddAssignmentsController::getDueDate()
 	return dueDate;
 }
 
+// Initializes the fields.
+void AddAssignmentsController::initialize(string sMaterial, int sYear, int sMonth, int sDay, int sHour, int sMinute)
+{
+	setMaterial(sMaterial);
+	setDueDate(sYear, sMonth, sDay, sHour, sMinute);
+}
+
 /******************************************************************************
 	dateTimeString() is a helper function for setDueDate() 
 	that creates a string representation of the due date.
@@ -700,23 +706,55 @@ string AddAssignmentsController::timeString(int hours, int minutes)
 {
 	stringstream timeStamp;	// Holds the time string to be used in the date string.
 
+							// converts 0 to 12 AM.
 	if (hours == 0)
 	{
-		timeStamp << "12:" << minutes << " A.M.";
+		if (minutes == 0)
+		{
+			timeStamp << "12:" << "00" << " A.M.";
+		}
+		else
+		{
+			timeStamp << "12:" << minutes << " A.M.";
+		}
 	}
+	// 1-11 AM.
 	else if (hours < 12)
 	{
-		timeStamp << hours << ':' << minutes << " A.M.";
+		if (minutes == 0)
+		{
+			timeStamp << hours << ':' << "00" << " A.M.";
+		}
+		else
+		{
+			timeStamp << hours << ':' << minutes << " A.M.";
+		}
 	}
+	// 12 PM.
 	else if (hours == 12)
 	{
-		timeStamp << hours << ':' << minutes << " P.M.";
+		if (minutes == 0)
+		{
+			timeStamp << hours << ':' << "00" << " P.M.";
+		}
+		else
+		{
+			timeStamp << hours << ':' << minutes << " P.M.";
+		}
 	}
+	// Converts the time after 12PM.
 	else
 	{
 		hours = hours - 12;
 
-		timeStamp << hours << ':' << minutes << " P.M.";
+		if (minutes == 0)
+		{
+			timeStamp << hours << ':' << "00" << " P.M.";
+		}
+		else
+		{
+			timeStamp << hours << ':' << minutes << " P.M.";
+		}
 	}
 
 	return timeStamp.str();

@@ -19,9 +19,9 @@ public:
 	void setDueDate( int, int, int, int, int );
 	string getDueDate();
 private:
+	void initialize( string, int, int, int, int, int );
 	string dateTimeString( string, int, int, int, int, int, int, bool );
-	string timeString( int, int);
-
+	string timeString( int, int );
 	string material;
 	string dueDate;
 };
