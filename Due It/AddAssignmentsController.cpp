@@ -1,9 +1,9 @@
 #include "AddAssignmentsController.h"
 
-AddAssignmentsController::AddAssignmentsController(string selectedMaterial, int selectedYear, 
+AddAssignmentsController::AddAssignmentsController(string selectedMaterial, string selectedName, int selectedYear, 
 					int selectedMonth, int selectedDay, int selectedHour, int selectedMinute)
 {
-	initialize(selectedMaterial, selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute);
+	initialize(selectedMaterial, selectedName, selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute);
 }
 
 
@@ -41,6 +41,16 @@ void AddAssignmentsController::setMaterial(string testMaterial)
 string AddAssignmentsController::getMaterial()
 {
 	return material;
+}
+
+void AddAssignmentsController::setName(string sName)
+{
+	name = sName;
+}
+
+string AddAssignmentsController::getName()
+{
+	return name;
 }
 
 /******************************************************************************
@@ -632,9 +642,10 @@ string AddAssignmentsController::getDueDate()
 }
 
 // Initializes the fields.
-void AddAssignmentsController::initialize(string sMaterial, int sYear, int sMonth, int sDay, int sHour, int sMinute)
+void AddAssignmentsController::initialize(string sMaterial, string sName, int sYear, int sMonth, int sDay, int sHour, int sMinute)
 {
 	setMaterial(sMaterial);
+	setName(sName);
 	setDueDate(sYear, sMonth, sDay, sHour, sMinute);
 }
 
