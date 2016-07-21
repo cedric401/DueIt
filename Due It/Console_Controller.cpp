@@ -4,7 +4,7 @@
 #include <ctime>
 using namespace std;
 
-Console_Controller::Console_Controller(Schedule model)
+Console_Controller::Console_Controller(Schedule* model)
 {
 	tasks = model;
 	char continueResponse = '~';
@@ -23,8 +23,8 @@ Console_Controller::Console_Controller(Schedule model)
 			createTask();
 			break;
 		case 'p': //Print Schedule
-			tasks.updateSchedule();
-			cout << tasks.toString();
+			tasks->updateSchedule();
+			cout << tasks->toString();
 			break;
 		case 'l': //List commands
 			cout << "'q' - Quit program   'a' - Add task(s) to schedule   'p' - Print schedule\n";
@@ -40,8 +40,8 @@ Console_Controller::~Console_Controller()
 void Console_Controller::printTime()
 {
 	struct tm *currentTime;
-	tasks.updateTime();
-	currentTime = tasks.getCurrentTime();
+	tasks->updateTime();
+	currentTime = tasks->getCurrentTime();
 	string weekday;
 	switch (currentTime->tm_wday)
 	{
@@ -150,7 +150,7 @@ void Console_Controller::createJob()
 	
 	Job *newJob;
 	newJob = new Job(startSeconds, endSeconds, day, month, year, repeat, repeatInDays, repeatInMonths, Company(), hours, rate);
-	tasks.addTask(newJob);
+	tasks->addTask(newJob);
 }
 
 void Console_Controller::createAssignment()
@@ -202,5 +202,5 @@ void Console_Controller::createPayment()
 	}
 	Payment *newPayment;
 	newPayment = new Payment(startSeconds, day, month, year, repeat, repeatInDays, repeatInMonths, Company(), amount, false, accountType);
-	tasks.addTask(newPayment);
+	tasks->addTask(newPayment);
 }

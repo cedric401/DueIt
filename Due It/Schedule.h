@@ -11,6 +11,7 @@ namespace DueItModel
 	class Schedule
 	{
 	public:
+		std::string test;
 		Schedule();
 		~Schedule();
 		void updateTime();

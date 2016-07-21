@@ -4,10 +4,10 @@ using namespace DueItModel;
 class Console_Controller
 {
 public:
-	Console_Controller(Schedule model);
+	Console_Controller(Schedule* model);
 	~Console_Controller();
 private:
-	Schedule tasks;
+	Schedule* tasks;
 	void printTime();
 	void createPayment();
 	void createTask();

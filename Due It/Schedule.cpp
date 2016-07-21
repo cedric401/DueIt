@@ -3,6 +3,7 @@
 #include <sstream>
 #include <ctime>
 #include <algorithm>
+
 using namespace std;
 
 namespace DueItModel
@@ -71,11 +72,41 @@ namespace DueItModel
 	}
 	void Schedule::deleteAllTasksForCourse(int courseNumber)
 	{
-		//TODO
+		for (std::vector<Task *>::iterator iter = currentSchedule.begin(); iter != currentSchedule.end();)
+		{
+			if (typeid(*iter).name() == typeid(AssignmentTask).name() || typeid(*iter).name() == typeid(CourseMeeting).name())
+			{
+				if (static_cast<AssignmentTask*>(*iter)->getCourse().getCourseNumber() == courseNumber)
+				{
+					(*iter)->deleteEntry();
+					delete (*iter);
+					iter = currentSchedule.erase(iter);
+				}
+				else
+				{
+					iter++;
+				}
+			}
+		}
 	}
 	void Schedule::deleteAllTasksForJob(string companyName)
 	{
-		//TODO
+		for (std::vector<Task *>::iterator iter = currentSchedule.begin(); iter != currentSchedule.end();)
+		{
+			if (typeid(*iter).name() == typeid(Job).name())
+			{
+				if (static_cast<Job*>(*iter)->getEmployer().getCompanyName() == companyName)
+				{
+					(*iter)->deleteEntry();
+					delete (*iter);
+					iter = currentSchedule.erase(iter);
+				}
+				else
+				{
+					iter++;
+				}
+			}
+		}
 	}
 	void Schedule::deleteAllTimePeriod(int strtT, int strtD, int strtM, int strtY, int endT, int endD, int endM, int endY)
 	{

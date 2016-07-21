@@ -7,7 +7,7 @@ using namespace DueItModel;
 
 int main()
 {
-	Schedule model = Schedule();
+	Schedule* model = new Schedule();
 	Console_Controller controller = Console_Controller(model);
 	return 0;
 }

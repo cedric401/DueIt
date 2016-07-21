@@ -17,3 +17,11 @@ Due It.VC.db
 *.opendb
 *.opensdf
 *.sdf
+*.vcxproj
+*.filters
+*.dll
+*.iobj
+*.ipdb
+*.filters
+Due It/Due It.vcxproj.filters
+*.vcxproj
