@@ -14,7 +14,7 @@ using std::stringstream;
 class AddAssignmentsController
 {
 public:
-	AddAssignmentsController( int, string, string, int, int, int, int, int );
+	AddAssignmentsController( string, string, string, int, int, int, int, int );
 	~AddAssignmentsController();
 	void setMaterial( string );
 	string getMaterial();

@@ -1,11 +1,11 @@
 #include "AddAssignmentsController.h"
 
-AddAssignmentsController::AddAssignmentsController(int courseId, string selectedMaterial, string selectedName, int selectedYear, 
+AddAssignmentsController::AddAssignmentsController(string selectedCourse, string selectedMaterial, string selectedName, int selectedYear, 
 					int selectedMonth, int selectedDay, int selectedHour, int selectedMinute)
 {
 	initialize(selectedMaterial, selectedName, selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute);
 	AssignmentDBManipulator adbm = AssignmentDBManipulator();
-	adbm.createAssignment(courseId, selectedMaterial, selectedName, dueDate);
+	adbm.createAssignment(selectedCourse, selectedMaterial, selectedName, dueDate);
 
 	adbm.terminateConnection();
 }
