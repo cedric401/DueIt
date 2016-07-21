@@ -21,7 +21,7 @@ public:
 	AssignmentDBManipulator();
 	~AssignmentDBManipulator();
 	void terminateConnection();
-	void createCourse (string, string, string, string, string );
+	void createCourse ( string, string, string, string, string );
 	void createAssignment( int, string, string, string );
 	void deleteCourse();
 	void deleteAssignment();
@@ -37,5 +37,6 @@ private:
 	sql::Connection* connection;
 	sql::Statement* statement;
 	sql::PreparedStatement  *preparedStatement;
+	sql::ResultSet *resultsSet;
 };
 
