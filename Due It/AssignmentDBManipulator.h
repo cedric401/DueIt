@@ -21,20 +21,21 @@ public:
 	AssignmentDBManipulator();
 	~AssignmentDBManipulator();
 	void terminateConnection();
-private:
-	void initialize();
-	void testConnection();
-	void createCourse();
-	void createAssignment();
+	void createCourse (string, string, string, string, string );
+	void createAssignment( int, string, string, string );
 	void deleteCourse();
 	void deleteAssignment();
 	void updateCourse();
 	void updateAssignment();
 	void readCourse(int row);
 	void readAssignment(int row);
-
+private:
+	void initialize();
+	void testConnection();
+	
 	sql::mysql::MySQL_Driver* driver;
 	sql::Connection* connection;
 	sql::Statement* statement;
+	sql::PreparedStatement  *preparedStatement;
 };
 

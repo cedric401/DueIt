@@ -1,9 +1,14 @@
 #include "AddCourseController.h"
+#include "AssignmentDBManipulator.h"
 
 AddCourseController::AddCourseController(string cName, string cSubject, string cNumber,
 				string cSection, string days, int fromHour, int fromMinute, int toHour, int toMinute)
 {
 	initialize(cName, cSubject, cNumber, cSection, days, fromHour, fromMinute, toHour, toMinute);
+	AssignmentDBManipulator adbm = AssignmentDBManipulator();
+	adbm.createCourse(courseName, courseSubject, courseNumber, courseSection, courseSchedule);
+
+	adbm.terminateConnection();
 }
 
 AddCourseController::~AddCourseController()

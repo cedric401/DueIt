@@ -1,6 +1,8 @@
 #pragma once
 #pragma warning(disable : 4996) //_CRT_SECURE_NO_WARNINGS
 
+#include "AssignmentDBManipulator.h"
+
 #include <string>
 using std::string;
 
@@ -12,7 +14,7 @@ using std::stringstream;
 class AddAssignmentsController
 {
 public:
-	AddAssignmentsController( string, string, int, int, int, int, int );
+	AddAssignmentsController( int, string, string, int, int, int, int, int );
 	~AddAssignmentsController();
 	void setMaterial( string );
 	string getMaterial();
