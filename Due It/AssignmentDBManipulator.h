@@ -23,8 +23,8 @@ public:
 	void terminateConnection();
 	void createCourse ( string, string, string, string, string );
 	void createAssignment( string, string, string, string );
-	void deleteCourse();
-	void deleteAssignment();
+	void deleteCourse( int );
+	void deleteAssignment( int );
 	void updateCourse();
 	void updateAssignment();
 	int readCourse( string );

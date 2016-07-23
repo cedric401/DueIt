@@ -166,10 +166,14 @@ void AssignmentDBManipulator::createAssignment(string aCourse, string aMaterial,
 
 /*****************************************************************************/
 /*****************************************************************************/
-void AssignmentDBManipulator::deleteCourse()
+void AssignmentDBManipulator::deleteCourse(int cId)
 {
 	try {
-
+		/*
+			TODO: 
+			*	delete assignments tied to the course to be deleted.
+			*	delete the course.
+		*/
 	}
 	catch (sql::SQLException &e) {
 		/*
@@ -197,10 +201,13 @@ void AssignmentDBManipulator::deleteCourse()
 
 /*****************************************************************************/
 /*****************************************************************************/
-void AssignmentDBManipulator::deleteAssignment()
+void AssignmentDBManipulator::deleteAssignment(int aId)
 {
 	try {
-
+		/*
+			TODO:
+			*	delete assignment.
+		*/
 	}
 	catch (sql::SQLException &e) {
 		/*
