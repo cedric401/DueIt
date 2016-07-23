@@ -19,3 +19,5 @@ Due It.VC.db
 *.sdf
 *.ipdb
 x64/Release/Due It.iobj
+*.iobj
+x64/Release/Due It.ipdb
