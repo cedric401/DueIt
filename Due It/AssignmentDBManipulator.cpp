@@ -166,14 +166,21 @@ void AssignmentDBManipulator::createAssignment(string aCourse, string aMaterial,
 
 /*****************************************************************************/
 /*****************************************************************************/
-void AssignmentDBManipulator::deleteCourse(int cId)
+void AssignmentDBManipulator::deleteCourse(string cName)
 {
+	string test;
+
 	try {
-		/*
-			TODO: 
-			*	delete assignments tied to the course to be deleted.
-			*	delete the course.
-		*/
+		deleteAllAssignment(cName);
+
+		preparedStatement = connection->prepareStatement("DELETE FROM courses WHERE courses.courseName = ?");
+		preparedStatement->setString(1, cName);
+		preparedStatement->execute();
+
+		delete preparedStatement;
+
+		cout << cName << " has been deleted from the courses table." << endl;
+		cin >> test;
 	}
 	catch (sql::SQLException &e) {
 		/*
@@ -201,13 +208,63 @@ void AssignmentDBManipulator::deleteCourse(int cId)
 
 /*****************************************************************************/
 /*****************************************************************************/
-void AssignmentDBManipulator::deleteAssignment(int aId)
+void AssignmentDBManipulator::deleteAllAssignment(string cName)
 {
+	string test;
+
 	try {
+		preparedStatement = connection->prepareStatement(
+			"DELETE FROM assignments WHERE assignments.courseId = ?");
+		preparedStatement->setInt(1, readCourse(cName));
+		preparedStatement->execute();
+
+		delete preparedStatement;
+
+		cout << cName << " assignments have been deleted from the assignments table." << endl;
+		cin >> test;
+	}
+	catch (sql::SQLException &e) {
 		/*
-			TODO:
-			*	delete assignment.
+		MySQL Connector/C++ throws three different exceptions:
+
+		- sql::MethodNotImplementedException (derived from sql::SQLException)
+		- sql::InvalidArgumentException (derived from sql::SQLException)
+		- sql::SQLException (derived from std::runtime_error)
 		*/
+		cout << "# ERR: SQLException in " << __FILE__;
+		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+		/* what() (derived from std::runtime_error) fetches error message */
+		cout << "# ERR: " << e.what();
+		cout << " (MySQL error code: " << e.getErrorCode();
+		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+	}
+	catch (std::runtime_error &e)
+	{
+		cout << "# ERR: runtime_error in " << __FILE__;
+		cout << "(" << ") on line " << __LINE__ << endl;
+		cout << "# ERR: " << e.what() << endl;
+		cout << "not ok 1 - examples/resultset_types.cpp" << endl;
+	}
+}
+
+/*****************************************************************************/
+/*****************************************************************************/
+void AssignmentDBManipulator::deleteAssignment(string cName, string aName)
+{
+	string test;
+
+	try {
+		preparedStatement = connection->prepareStatement(
+			"DELETE FROM assignments WHERE assignments.courseId = ? AND assignments.assignmentId = ?");
+		preparedStatement->setInt(1, readCourse(cName));
+		preparedStatement->setInt(2, readAssignment(cName, aName));
+		preparedStatement->execute();
+
+		delete preparedStatement;
+
+		cout << aName << " assignment has been deleted from " << cName << " on the assignments table." << endl;
+		cin >> test;
+
 	}
 	catch (sql::SQLException &e) {
 		/*
@@ -302,7 +359,8 @@ int AssignmentDBManipulator::readCourse(string course)
 	int iD = 0;
 
 	try {
-		std::auto_ptr<sql::ResultSet> results(statement->executeQuery("SELECT courses.courseId, courses.courseName FROM courses"));
+		//std::auto_ptr<sql::ResultSet> results(statement->executeQuery("SELECT courses.courseId, courses.courseName FROM courses"));
+		sql::ResultSet *results = statement->executeQuery("SELECT courses.courseId, courses.courseName FROM courses");
 
 		while (results->next())
 		{
@@ -312,6 +370,7 @@ int AssignmentDBManipulator::readCourse(string course)
 			}
 		}
 
+		delete results;
 		return iD;
 	}
 	catch (sql::SQLException &e) {
@@ -340,10 +399,26 @@ int AssignmentDBManipulator::readCourse(string course)
 
 /*****************************************************************************/
 /*****************************************************************************/
-void AssignmentDBManipulator::readAssignment(int row)
+int AssignmentDBManipulator::readAssignment(string course, string assignment)
 {
-	try {
+	int aId = 0;
+	int cId = readCourse(course);
 
+	try {
+		//std::auto_ptr<sql::ResultSet> results(statement->executeQuery(
+			//"SELECT assignments.assignmentId, assignments.courseId, assignments.assignmentName FROM assignments"));
+		sql::ResultSet *results = statement->executeQuery("SELECT assignments.assignmentId, assignments.courseId, assignments.assignmentName FROM assignments");
+
+		while (results->next())
+		{
+			if ((cId == results->getInt("courseId")) && (assignment == results->getString("assignmentName")))
+			{
+				aId = results->getInt("assignmentId");
+			}
+		}
+
+		delete results;
+		return aId;
 	}
 	catch (sql::SQLException &e) {
 		/*
@@ -373,8 +448,6 @@ void AssignmentDBManipulator::readAssignment(int row)
 /*****************************************************************************/
 void AssignmentDBManipulator::initialize()
 {
-	
-
 	try {
 		driver = sql::mysql::get_mysql_driver_instance();
 		connection = driver->connect("tcp://127.0.0.1:3306", "root", "mysql");
@@ -415,7 +488,6 @@ void AssignmentDBManipulator::testConnection()
 
 	try
 	{
-
 		if (connection->isValid())
 		{
 			cout << "Connection was successfull!!" << endl;

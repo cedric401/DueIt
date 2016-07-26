@@ -23,12 +23,13 @@ public:
 	void terminateConnection();
 	void createCourse ( string, string, string, string, string );
 	void createAssignment( string, string, string, string );
-	void deleteCourse( int );
-	void deleteAssignment( int );
+	void deleteCourse( string );
+	void deleteAllAssignment( string );
+	void deleteAssignment( string, string );
 	void updateCourse();
 	void updateAssignment();
 	int readCourse( string );
-	void readAssignment(int row);
+	int readAssignment( string, string );
 private:
 	void initialize();
 	void testConnection();
