@@ -20,6 +20,7 @@ namespace DueItModel
 		Company getCompany() const;
 		void setAccountType(const std::string& newType);
 		std::string getAccountType() const;
+		int getRowID();
 		bool operator==(const Payment& rhs);
 		void createEntry();
 		void deleteEntry();

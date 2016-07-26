@@ -91,6 +91,11 @@ namespace DueItModel
 		return accountType;
 	}
 
+	int Payment::getRowID()
+	{
+		return rowID;
+	}
+
 	bool Payment::operator==(const Payment & rhs)
 	{
 		if (startTime == rhs.getTime() && day == rhs.getDay() && month == rhs.getMonth() && year == rhs.getYear() && isRepeating == rhs.getIsRepeating()

@@ -189,6 +189,11 @@ namespace DueItModel
 		return rate;
 	}
 
+	int Job::getRowID()
+	{
+		return rowID;
+	}
+
 	bool Job::operator==(const Job & rhs)
 	{
 		if (startTime == rhs.getTime() && day == rhs.getDay() && month == rhs.getMonth() && year == rhs.getYear() && isRepeating == rhs.getIsRepeating()

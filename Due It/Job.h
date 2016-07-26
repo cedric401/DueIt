@@ -20,6 +20,7 @@ namespace DueItModel
 		int getHours() const;
 		void setRate(float newRate);
 		float getRate() const;
+		int getRowID();
 		bool operator==(const Job& rhs);
 		void createEntry();
 		void deleteEntry();
