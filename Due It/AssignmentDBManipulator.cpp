@@ -7,7 +7,6 @@ AssignmentDBManipulator::AssignmentDBManipulator()
 	initialize();
 }
 
-
 AssignmentDBManipulator::~AssignmentDBManipulator()
 {
 }
@@ -262,9 +261,8 @@ void AssignmentDBManipulator::deleteAssignment(string cName, string aName)
 
 		delete preparedStatement;
 
-		cout << aName << " assignment has been deleted from " << cName << " on the assignments table." << endl;
+		cout << cName << "'s "<< aName << " assignment has been deleted from the table." << endl;
 		cin >> test;
-
 	}
 	catch (sql::SQLException &e) {
 		/*
@@ -292,10 +290,20 @@ void AssignmentDBManipulator::deleteAssignment(string cName, string aName)
 
 /*****************************************************************************/
 /*****************************************************************************/
-void AssignmentDBManipulator::updateCourse()
+void AssignmentDBManipulator::updateCourseName(string course, string name)
 {
-	try {
+	string test;
 
+	try {
+		preparedStatement = connection->prepareStatement("UPDATE courses SET courseName = ? WHERE courseId = ?");
+		preparedStatement->setString(1, name);
+		preparedStatement->setInt(2, readCourse(course));
+		preparedStatement->execute();
+
+		delete preparedStatement;
+
+		cout << course << "'s name has been changed to " << name << " successfully." << endl;
+		cin >> test;
 	}
 	catch (sql::SQLException &e) {
 		/*
@@ -323,10 +331,315 @@ void AssignmentDBManipulator::updateCourse()
 
 /*****************************************************************************/
 /*****************************************************************************/
-void AssignmentDBManipulator::updateAssignment()
+void AssignmentDBManipulator::updateCourseSubject(string course, string subject)
 {
-	try {
+	string test;
 
+	try {
+		preparedStatement = connection->prepareStatement("UPDATE courses SET courseSubject = ? WHERE courseId = ?");
+		preparedStatement->setString(1, subject);
+		preparedStatement->setInt(2, readCourse(course));
+		preparedStatement->execute();
+
+		delete preparedStatement;
+
+		cout << course << "'s subject has been changed to " << subject << " successfully." << endl;
+		cin >> test;
+	}
+	catch (sql::SQLException &e) {
+		/*
+		MySQL Connector/C++ throws three different exceptions:
+
+		- sql::MethodNotImplementedException (derived from sql::SQLException)
+		- sql::InvalidArgumentException (derived from sql::SQLException)
+		- sql::SQLException (derived from std::runtime_error)
+		*/
+		cout << "# ERR: SQLException in " << __FILE__;
+		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+		/* what() (derived from std::runtime_error) fetches error message */
+		cout << "# ERR: " << e.what();
+		cout << " (MySQL error code: " << e.getErrorCode();
+		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+	}
+	catch (std::runtime_error &e)
+	{
+		cout << "# ERR: runtime_error in " << __FILE__;
+		cout << "(" << ") on line " << __LINE__ << endl;
+		cout << "# ERR: " << e.what() << endl;
+		cout << "not ok 1 - examples/resultset_types.cpp" << endl;
+	}
+}
+
+/*****************************************************************************/
+/*****************************************************************************/
+void AssignmentDBManipulator::updateCourseNumber(string course, string number)
+{
+	string test;
+
+	try {
+		preparedStatement = connection->prepareStatement("UPDATE courses SET courseNumber = ? WHERE courseId = ?");
+		preparedStatement->setString(1, number);
+		preparedStatement->setInt(2, readCourse(course));
+		preparedStatement->execute();
+
+		delete preparedStatement;
+
+		cout << course << "'s number has been changed to " << number << " successfully." << endl;
+		cin >> test;
+	}
+	catch (sql::SQLException &e) {
+		/*
+		MySQL Connector/C++ throws three different exceptions:
+
+		- sql::MethodNotImplementedException (derived from sql::SQLException)
+		- sql::InvalidArgumentException (derived from sql::SQLException)
+		- sql::SQLException (derived from std::runtime_error)
+		*/
+		cout << "# ERR: SQLException in " << __FILE__;
+		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+		/* what() (derived from std::runtime_error) fetches error message */
+		cout << "# ERR: " << e.what();
+		cout << " (MySQL error code: " << e.getErrorCode();
+		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+	}
+	catch (std::runtime_error &e)
+	{
+		cout << "# ERR: runtime_error in " << __FILE__;
+		cout << "(" << ") on line " << __LINE__ << endl;
+		cout << "# ERR: " << e.what() << endl;
+		cout << "not ok 1 - examples/resultset_types.cpp" << endl;
+	}
+}
+
+/*****************************************************************************/
+/*****************************************************************************/
+void AssignmentDBManipulator::updateCourseSection(string course, string section)
+{
+	string test;
+
+	try {
+		preparedStatement = connection->prepareStatement("UPDATE courses SET courseSection = ? WHERE courseId = ?");
+		preparedStatement->setString(1, section);
+		preparedStatement->setInt(2, readCourse(course));
+		preparedStatement->execute();
+
+		delete preparedStatement;
+
+		cout << course << "'s section has been changed to " << section << " successfully." << endl;
+		cin >> test;
+	}
+	catch (sql::SQLException &e) {
+		/*
+		MySQL Connector/C++ throws three different exceptions:
+
+		- sql::MethodNotImplementedException (derived from sql::SQLException)
+		- sql::InvalidArgumentException (derived from sql::SQLException)
+		- sql::SQLException (derived from std::runtime_error)
+		*/
+		cout << "# ERR: SQLException in " << __FILE__;
+		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+		/* what() (derived from std::runtime_error) fetches error message */
+		cout << "# ERR: " << e.what();
+		cout << " (MySQL error code: " << e.getErrorCode();
+		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+	}
+	catch (std::runtime_error &e)
+	{
+		cout << "# ERR: runtime_error in " << __FILE__;
+		cout << "(" << ") on line " << __LINE__ << endl;
+		cout << "# ERR: " << e.what() << endl;
+		cout << "not ok 1 - examples/resultset_types.cpp" << endl;
+	}
+}
+
+/*****************************************************************************/
+/*****************************************************************************/
+void AssignmentDBManipulator::updateCourseSchedule(string course, string schedule)
+{
+	string test;
+
+	try {
+		preparedStatement = connection->prepareStatement("UPDATE courses SET courseSchedule = ? WHERE courseId = ?");
+		preparedStatement->setString(1, schedule);
+		preparedStatement->setInt(2, readCourse(course));
+		preparedStatement->execute();
+
+		delete preparedStatement;
+
+		cout << course << "'s schedule has been changed to " << schedule << " successfully." << endl;
+		cin >> test;
+	}
+	catch (sql::SQLException &e) {
+		/*
+		MySQL Connector/C++ throws three different exceptions:
+
+		- sql::MethodNotImplementedException (derived from sql::SQLException)
+		- sql::InvalidArgumentException (derived from sql::SQLException)
+		- sql::SQLException (derived from std::runtime_error)
+		*/
+		cout << "# ERR: SQLException in " << __FILE__;
+		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+		/* what() (derived from std::runtime_error) fetches error message */
+		cout << "# ERR: " << e.what();
+		cout << " (MySQL error code: " << e.getErrorCode();
+		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+	}
+	catch (std::runtime_error &e)
+	{
+		cout << "# ERR: runtime_error in " << __FILE__;
+		cout << "(" << ") on line " << __LINE__ << endl;
+		cout << "# ERR: " << e.what() << endl;
+		cout << "not ok 1 - examples/resultset_types.cpp" << endl;
+	}
+}
+
+/*****************************************************************************/
+/*****************************************************************************/
+void AssignmentDBManipulator::updateAssignmentCourseId(string course, string assignment, string newCourse)
+{
+	string test;
+
+	try {
+		preparedStatement = connection->prepareStatement(
+			"UPDATE assignments SET courseId = ? WHERE courseId = ? AND assignmentName = ?");
+		preparedStatement->setInt(1, readCourse(newCourse));
+		preparedStatement->setInt(2, readCourse(course));
+		preparedStatement->setInt(3, readAssignment(course, assignment));
+		preparedStatement->execute();
+
+		delete preparedStatement;
+
+		cout << assignment << "'s course has been changed to " << newCourse << " successfully." << endl;
+		cin >> test;
+	}
+	catch (sql::SQLException &e) {
+		/*
+		MySQL Connector/C++ throws three different exceptions:
+
+		- sql::MethodNotImplementedException (derived from sql::SQLException)
+		- sql::InvalidArgumentException (derived from sql::SQLException)
+		- sql::SQLException (derived from std::runtime_error)
+		*/
+		cout << "# ERR: SQLException in " << __FILE__;
+		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+		/* what() (derived from std::runtime_error) fetches error message */
+		cout << "# ERR: " << e.what();
+		cout << " (MySQL error code: " << e.getErrorCode();
+		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+	}
+	catch (std::runtime_error &e)
+	{
+		cout << "# ERR: runtime_error in " << __FILE__;
+		cout << "(" << ") on line " << __LINE__ << endl;
+		cout << "# ERR: " << e.what() << endl;
+		cout << "not ok 1 - examples/resultset_types.cpp" << endl;
+	}
+}
+
+/*****************************************************************************/
+/*****************************************************************************/
+void AssignmentDBManipulator::updateAssignmentMaterial(string course, string assignment, string material)
+{
+	string test;
+
+	try {
+		preparedStatement = connection->prepareStatement(
+			"UPDATE assignments SET assignmentMaterial = ? WHERE courseId = ? AND assignmentName = ?");
+		preparedStatement->setString(1, material);
+		preparedStatement->setInt(2, readCourse(course));
+		preparedStatement->setInt(3, readAssignment(course, assignment));
+		preparedStatement->execute();
+
+		delete preparedStatement;
+
+		cout << assignment << "'s material has been changed to " << material << " successfully." << endl;
+		cin >> test;
+	}
+	catch (sql::SQLException &e) {
+		/*
+		MySQL Connector/C++ throws three different exceptions:
+
+		- sql::MethodNotImplementedException (derived from sql::SQLException)
+		- sql::InvalidArgumentException (derived from sql::SQLException)
+		- sql::SQLException (derived from std::runtime_error)
+		*/
+		cout << "# ERR: SQLException in " << __FILE__;
+		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+		/* what() (derived from std::runtime_error) fetches error message */
+		cout << "# ERR: " << e.what();
+		cout << " (MySQL error code: " << e.getErrorCode();
+		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+	}
+	catch (std::runtime_error &e)
+	{
+		cout << "# ERR: runtime_error in " << __FILE__;
+		cout << "(" << ") on line " << __LINE__ << endl;
+		cout << "# ERR: " << e.what() << endl;
+		cout << "not ok 1 - examples/resultset_types.cpp" << endl;
+	}
+}
+
+/*****************************************************************************/
+/*****************************************************************************/
+void AssignmentDBManipulator::updateAssignmentName(string course, string assignment, string name)
+{
+	string test;
+
+	try {
+		preparedStatement = connection->prepareStatement(
+			"UPDATE assignments SET assignmentName = ? WHERE courseId = ? AND assignmentName = ?");
+		preparedStatement->setString(1, name);
+		preparedStatement->setInt(2, readCourse(course));
+		preparedStatement->setInt(3, readAssignment(course, assignment));
+		preparedStatement->execute();
+
+		delete preparedStatement;
+
+		cout << assignment << "'s name has been changed to " << name << " successfully." << endl;
+		cin >> test;
+	}
+	catch (sql::SQLException &e) {
+		/*
+		MySQL Connector/C++ throws three different exceptions:
+
+		- sql::MethodNotImplementedException (derived from sql::SQLException)
+		- sql::InvalidArgumentException (derived from sql::SQLException)
+		- sql::SQLException (derived from std::runtime_error)
+		*/
+		cout << "# ERR: SQLException in " << __FILE__;
+		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+		/* what() (derived from std::runtime_error) fetches error message */
+		cout << "# ERR: " << e.what();
+		cout << " (MySQL error code: " << e.getErrorCode();
+		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+	}
+	catch (std::runtime_error &e)
+	{
+		cout << "# ERR: runtime_error in " << __FILE__;
+		cout << "(" << ") on line " << __LINE__ << endl;
+		cout << "# ERR: " << e.what() << endl;
+		cout << "not ok 1 - examples/resultset_types.cpp" << endl;
+	}
+}
+
+/*****************************************************************************/
+/*****************************************************************************/
+void AssignmentDBManipulator::updateAssignmentDueDate(string course, string assignment, string duedate)
+{
+	string test;
+
+	try {
+		preparedStatement = connection->prepareStatement(
+			"UPDATE assignments SET assignmentDuedate = ? WHERE courseId = ? AND assignmentName = ?");
+		preparedStatement->setString(1, duedate);
+		preparedStatement->setInt(2, readCourse(course));
+		preparedStatement->setInt(3, readAssignment(course, assignment));
+		preparedStatement->execute();
+
+		delete preparedStatement;
+
+		cout << assignment << "'s duedate has been changed to " << duedate << " successfully." << endl;
+		cin >> test;
 	}
 	catch (sql::SQLException &e) {
 		/*
@@ -454,7 +767,6 @@ void AssignmentDBManipulator::initialize()
 		testConnection();
 		statement = connection->createStatement();
 		connection->setSchema("school");
-		//statement->execute("USE school");
 	}
 	catch (sql::SQLException &e) {
 		/*

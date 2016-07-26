@@ -22,7 +22,7 @@ AddAssignmentsController::~AddAssignmentsController()
 void AddAssignmentsController::setMaterial(string testMaterial)
 {
 	// Holds the different type of assignments that can be assigned.
-	string courseMaterials[] = { "Homework", "Quiz", "Test", "Paper", "Exam" };
+	string courseMaterials[] = { "Homework", "Quiz", "Test", "Paper", "Exam", "Program" };
 	
 	// Verifies the parameter is a course material.
 	for (int index = 0; index < sizeof(courseMaterials); index++)

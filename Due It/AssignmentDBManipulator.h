@@ -26,8 +26,15 @@ public:
 	void deleteCourse( string );
 	void deleteAllAssignment( string );
 	void deleteAssignment( string, string );
-	void updateCourse();
-	void updateAssignment();
+	void updateCourseName( string, string );
+	void updateCourseSubject( string, string );
+	void updateCourseNumber( string, string );
+	void updateCourseSection( string, string );
+	void updateCourseSchedule( string, string );
+	void updateAssignmentCourseId( string, string, string );
+	void updateAssignmentMaterial( string, string, string );
+	void updateAssignmentName( string, string, string );
+	void updateAssignmentDueDate( string, string, string );
 	int readCourse( string );
 	int readAssignment( string, string );
 private:
