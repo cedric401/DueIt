@@ -15,9 +15,6 @@ using namespace DueItModel;
 int main()
 {
 	AssignmentDBManipulator adbm = AssignmentDBManipulator();
-	//adbm.deleteAssignment("Functional Programming", "Test 1");
-	//adbm.deleteAllAssignment("Functional Programming");
-	//adbm.deleteCourse("Functional Programming");
 
 	adbm.terminateConnection();
 	return 0;
