@@ -152,10 +152,7 @@ namespace DueItModel
 
 	void Job::setEnd(int newEnd)
 	{
-		if (endTime > startTime)
-		{
-			endTime = newEnd;
-		}
+		endTime = newEnd;
 	}
 
 	int Job::getEnd() const

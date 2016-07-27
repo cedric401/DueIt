@@ -95,7 +95,7 @@ void MySQL_BillsDBManipulator::addCompany(Company aCompany)
 	}
 	catch (sql::SQLException &e)
 	{
-		printSQLError(e);
+		printSQLError(__FUNCTION__, __LINE__, e.what(), e.getErrorCode(), e.getSQLState());
 	}
 
 	delete con;
@@ -119,7 +119,7 @@ void MySQL_BillsDBManipulator::deleteCompany(Company aCompany)
 	}
 	catch (sql::SQLException &e)
 	{
-		printSQLError(e);
+		printSQLError(__FUNCTION__, __LINE__, e.what(), e.getErrorCode(), e.getSQLState());
 	}
 	/*The MySQL Job and Payment tables are set to on delete cascade, so any entries with the deleted company as their foreign key 
 	 *will be deleted as well, we don't need to handle it here.
@@ -128,7 +128,7 @@ void MySQL_BillsDBManipulator::deleteCompany(Company aCompany)
 	delete con;
 }
 
-Company MySQL_BillsDBManipulator::readCompany(string aName)
+Company MySQL_BillsDBManipulator::readCompany(std::string aName)
 {
 	sql::Driver *driver;
 	sql::Connection *con;
@@ -156,7 +156,7 @@ Company MySQL_BillsDBManipulator::readCompany(string aName)
 	}
 	catch (sql::SQLException e)
 	{
-		printSQLError(e);
+		printSQLError(__FUNCTION__, __LINE__, e.what(), e.getErrorCode(), e.getSQLState());
 	}
 	return aCompany;
 
@@ -165,12 +165,11 @@ Company MySQL_BillsDBManipulator::readCompany(string aName)
 	delete con;
 }
 
-void MySQL_BillsDBManipulator::updateCompany(Company aCompany, string aName)
+void MySQL_BillsDBManipulator::updateCompany(Company aCompany, std::string aName)
 {
 	sql::Driver *driver;
 	sql::Connection *con;
 	sql::PreparedStatement *prep;
-	Company aCompany = Company();
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
@@ -185,7 +184,7 @@ void MySQL_BillsDBManipulator::updateCompany(Company aCompany, string aName)
 	}
 	catch (sql::SQLException e)
 	{
-		printSQLError(e);
+		printSQLError(__FUNCTION__, __LINE__, e.what(), e.getErrorCode(), e.getSQLState());
 	}
 	/*The MySQL Job and Payment tables are set to on update cascade, so any entries with the updated company as their foreign key
 	*will be updated as well, we don't need to handle it here.
@@ -204,7 +203,7 @@ void MySQL_BillsDBManipulator::addJob(Job aJob)
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
 
-	string aName = aJob.getEmployer.getCompanyName().substr(0, 100);
+	string aName = aJob.getEmployer().getCompanyName().substr(0, 100);
 
 	prep = con->prepareStatement("INSERT INTO Job(startTime, endTime, hours, rate, jobDay, jobMonth, jobYear, companyName) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 	try
@@ -221,7 +220,7 @@ void MySQL_BillsDBManipulator::addJob(Job aJob)
 	}
 	catch (sql::SQLException &e)
 	{
-		printSQLError(e);
+		printSQLError(__FUNCTION__, __LINE__, e.what(), e.getErrorCode(), e.getSQLState());
 	}
 
 	delete con;
@@ -245,19 +244,19 @@ void MySQL_BillsDBManipulator::deleteJob(Job aJob)
 	}
 	catch (sql::SQLException &e)
 	{
-		printSQLError(e);
+		printSQLError(__FUNCTION__, __LINE__, e.what(), e.getErrorCode(), e.getSQLState());
 	}
 	delete prep;
 	delete con;
 }
 
-Job MySQL_BillsDBManipulator::readJob(int rowID)
+Job* MySQL_BillsDBManipulator::readJob(int rowID)
 {
 	sql::Driver *driver;
 	sql::Connection *con;
 	sql::ResultSet *res;
 	sql::PreparedStatement *prep;
-	Job aJob;
+	Job * aJob = nullptr;
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
@@ -269,23 +268,24 @@ Job MySQL_BillsDBManipulator::readJob(int rowID)
 		res = prep->executeQuery();
 		if (res->next())
 		{
-			aJob.setTime(res->getInt("startTime"));
-			aJob.setEnd(res->getInt("endTime"));
-			aJob.setHours(res->getInt("hours"));
-			aJob.setRate(res->getDouble("rate"));
-			aJob.setDay(res->getInt("jobDay"));
-			aJob.setMonth(res->getInt("jobMonth"));
-			aJob.setYear(res->getInt("jobYear"));
-			aJob.setEmployer(readCompany(res->getString("companyName")));
+			aJob = new Job(
+			res->getInt("startTime"),
+			res->getInt("endTime"),
+			res->getInt("jobDay"),
+			res->getInt("jobMonth"),
+			res->getInt("jobYear"),
+			false,
+			0,
+			0,
+			readCompany(res->getString("companyName")),
+			res->getInt("hours"),
+			res->getDouble("rate"));
 		}
-		else
-		{
-
-		}
+		//else aJob stays nullptr and is returned as such, must be checked for when using this method
 	}
 	catch (sql::SQLException e)
 	{
-		printSQLError(e);
+		printSQLError(__FUNCTION__, __LINE__, e.what(), e.getErrorCode(), e.getSQLState());
 	}
 	return aJob;
 
@@ -296,22 +296,162 @@ Job MySQL_BillsDBManipulator::readJob(int rowID)
 
 void MySQL_BillsDBManipulator::updateJob(Job aJob)
 {
+	sql::Driver *driver;
+	sql::Connection *con;
+	sql::PreparedStatement *prep;
+
+	driver = get_driver_instance();
+	con = driver->connect(HOST, USER, PASSWORD);
+
+	prep = con->prepareStatement("UPDATE Job SET startTime=?, endTime=?, hours=?, rate=?, jobDay=?, jobMonth=?, jobYear=?, companyName=? WHERE id=?");
+	try
+	{
+		prep->setInt(1, aJob.getTime());
+		prep->setInt(2, aJob.getEnd());
+		prep->setInt(3, aJob.getHours());
+		prep->setDouble(4, aJob.getRate());
+		prep->setInt(5, aJob.getDay());
+		prep->setInt(6, aJob.getMonth());
+		prep->setInt(7, aJob.getYear());
+		prep->setString(8, aJob.getEmployer().getCompanyName());
+		prep->setInt(9, aJob.getRowID());
+		prep->execute();
+	}
+	catch (sql::SQLException e)
+	{
+		printSQLError(__FUNCTION__, __LINE__, e.what(), e.getErrorCode(), e.getSQLState());
+	}
+
+	delete prep;
+	delete con;
 }
 
 void MySQL_BillsDBManipulator::addPayment(Payment aPayment)
 {
+	sql::Driver *driver;
+	sql::Connection *con;
+	sql::PreparedStatement *prep;
+
+	driver = get_driver_instance();
+	con = driver->connect(HOST, USER, PASSWORD);
+
+	string aName = aPayment.getCompany().getCompanyName().substr(0, 100);
+
+	prep = con->prepareStatement("INSERT INTO Payment(amount, dueTime, dueDay, dueMonth, dueYear, companyName) VALUES (?, ?, ?, ?, ?, ?)");
+	try
+	{
+		prep->setDouble(1, aPayment.getAmount());
+		prep->setInt(2, aPayment.getTime());
+		prep->setInt(3, aPayment.getDay());
+		prep->setDouble(4, aPayment.getMonth());
+		prep->setInt(5, aPayment.getYear());
+		prep->setString(6, aPayment.getCompany().getCompanyName());
+		prep->execute();
+	}
+	catch (sql::SQLException &e)
+	{
+		printSQLError(__FUNCTION__, __LINE__, e.what(), e.getErrorCode(), e.getSQLState());
+	}
+
+	delete con;
+	delete prep;
 }
 
 void MySQL_BillsDBManipulator::deletePayment(Payment aPayment)
 {
+	sql::Driver *driver;
+	sql::Connection *con;
+	sql::PreparedStatement *prep;
+
+	driver = get_driver_instance();
+	con = driver->connect(HOST, USER, PASSWORD);
+
+	prep = con->prepareStatement("DELETE FROM Payment WHERE id=?");
+	try
+	{
+		prep->setInt(1, aPayment.getRowID());
+		prep->execute();
+	}
+	catch (sql::SQLException &e)
+	{
+		printSQLError(__FUNCTION__, __LINE__, e.what(), e.getErrorCode(), e.getSQLState());
+	}
+	delete prep;
+	delete con;
 }
 
-Payment MySQL_BillsDBManipulator::readPayment(int rowID)
+Payment* MySQL_BillsDBManipulator::readPayment(int rowID)
 {
+	sql::Driver *driver;
+	sql::Connection *con;
+	sql::ResultSet *res;
+	sql::PreparedStatement *prep;
+	Payment * aPayment = nullptr;
+
+	driver = get_driver_instance();
+	con = driver->connect(HOST, USER, PASSWORD);
+
+	prep = con->prepareStatement("SELECT * FROM Payment WHERE id=?");
+	try
+	{
+		prep->setInt(1, rowID);
+		res = prep->executeQuery();
+		if (res->next())
+		{
+			aPayment = new Payment(
+				res->getInt("dueTime"),
+				res->getInt("dueDay"),
+				res->getInt("dueMonth"),
+				res->getInt("dueYear"),
+				false,
+				0,
+				0,
+				readCompany(res->getString("companyName")),
+				res->getDouble("amount"),
+				false,
+				"");
+		}
+		//else aPayment stays nullptr and is returned as such, must be checked for when using this method
+	}
+	catch (sql::SQLException e)
+	{
+		printSQLError(__FUNCTION__, __LINE__, e.what(), e.getErrorCode(), e.getSQLState());
+	}
+	return aPayment;
+
+	delete prep;
+	delete res;
+	delete con;
 }
 
 void MySQL_BillsDBManipulator::updatePayment(Payment aPayment)
 {
+	sql::Driver *driver;
+	sql::Connection *con;
+	sql::PreparedStatement *prep;
+
+	driver = get_driver_instance();
+	con = driver->connect(HOST, USER, PASSWORD);
+
+	prep = con->prepareStatement("UPDATE Payment SET amount=?, dueTime=?, dueDay=?, dueMonth=?, dueYear=?, companyName=? WHERE id=?");
+	try
+	{
+		prep->setDouble(1, aPayment.getAmount());
+		prep->setInt(2, aPayment.getTime());
+		prep->setInt(3, aPayment.getDay());
+		prep->setInt(4, aPayment.getMonth());
+		prep->setInt(5, aPayment.getYear());
+		prep->setString(6, aPayment.getCompany().getCompanyName());
+		prep->setInt(7, aPayment.getRowID());
+		prep->execute();
+	}
+	catch (sql::SQLException e)
+	{
+		printSQLError(__FUNCTION__, __LINE__, e.what(), e.getErrorCode(), e.getSQLState());
+	}
+
+	delete prep;
+	delete con;
 }
 
 std::vector<Task> MySQL_BillsDBManipulator::retrieveTasksInRange(int startTime, int startDay, int startMonth, int startYear, int endTime, int endDay, int endMonth, int endYear)
@@ -319,13 +459,13 @@ std::vector<Task> MySQL_BillsDBManipulator::retrieveTasksInRange(int startTime, 
 	return std::vector<Task>();
 }
 
-void MySQL_BillsDBManipulator::printSQLError(sql::SQLException & e)
+void MySQL_BillsDBManipulator::printSQLError(const std::string& func, int line, const std::string& error, int errorCode, const std::string& state)
 {
 	cout << "# ERR: SQLException in " << __FILE__;
-	cout << "(" << __FUNCTION__ << ") on line "
-		<< __LINE__ << endl;
-	cout << "# ERR: " << e.what();
-	cout << " (MySQL error code: " << e.getErrorCode();
-	cout << ", SQLState: " << e.getSQLState() <<
+	cout << "(" << func << ") on line "
+		<< line << endl;
+	cout << "# ERR: " << error;
+	cout << " (MySQL error code: " << errorCode;
+	cout << ", SQLState: " << state <<
 		" )" << endl;
 }

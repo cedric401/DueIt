@@ -6,7 +6,7 @@ class DBManipulator
 public:
 	DBManipulator();
 	~DBManipulator();
-	BillsDBManipulator billsDB;
-	AssignmentDBManipulator assignmentDB;
+	BillsDBManipulator* billsDB;
+	AssignmentDBManipulator* assignmentDB;
 };
 
