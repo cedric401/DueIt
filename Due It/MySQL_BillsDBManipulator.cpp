@@ -205,7 +205,7 @@ void MySQL_BillsDBManipulator::addJob(Job aJob)
 
 	string aName = aJob.getEmployer().getCompanyName().substr(0, 100);
 
-	prep = con->prepareStatement("INSERT INTO Job(startTime, endTime, hours, rate, jobDay, jobMonth, jobYear, companyName) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+	prep = con->prepareStatement("INSERT INTO Job(startTime, endTime, hours, rate, jobDay, jobMonth, jobYear, isRepeating, daysInterval, monthsInterval, companyName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 	try
 	{
 		prep->setInt(1, aJob.getTime());
@@ -215,7 +215,10 @@ void MySQL_BillsDBManipulator::addJob(Job aJob)
 		prep->setInt(5, aJob.getDay());
 		prep->setInt(6, aJob.getMonth());
 		prep->setInt(7, aJob.getYear());
-		prep->setString(8, aName);
+		prep->setBoolean(8, aJob.getIsRepeating());
+		prep->setInt(9, aJob.getDaysToRepeat());
+		prep->setInt(10, aJob.getMonthsToRepeat());
+		prep->setString(11, aName);
 		prep->execute();
 	}
 	catch (sql::SQLException &e)
@@ -274,9 +277,9 @@ Job* MySQL_BillsDBManipulator::readJob(int rowID)
 			res->getInt("jobDay"),
 			res->getInt("jobMonth"),
 			res->getInt("jobYear"),
-			false,
-			0,
-			0,
+			res->getBoolean("isRepeating"),
+			res->getInt("daysInterval"),
+			res->getInt("monthsInterval"),
 			readCompany(res->getString("companyName")),
 			res->getInt("hours"),
 			res->getDouble("rate"));
@@ -302,8 +305,9 @@ void MySQL_BillsDBManipulator::updateJob(Job aJob)
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
+	string aName = aJob.getEmployer().getCompanyName().substr(0, 100);
 
-	prep = con->prepareStatement("UPDATE Job SET startTime=?, endTime=?, hours=?, rate=?, jobDay=?, jobMonth=?, jobYear=?, companyName=? WHERE id=?");
+	prep = con->prepareStatement("UPDATE Job SET startTime=?, endTime=?, hours=?, rate=?, jobDay=?, jobMonth=?, jobYear=?, isRepeating=?, daysInterval=?, monthsInterval=?, companyName=? WHERE id=?");
 	try
 	{
 		prep->setInt(1, aJob.getTime());
@@ -313,8 +317,11 @@ void MySQL_BillsDBManipulator::updateJob(Job aJob)
 		prep->setInt(5, aJob.getDay());
 		prep->setInt(6, aJob.getMonth());
 		prep->setInt(7, aJob.getYear());
-		prep->setString(8, aJob.getEmployer().getCompanyName());
-		prep->setInt(9, aJob.getRowID());
+		prep->setBoolean(8, aJob.getIsRepeating());
+		prep->setInt(9, aJob.getDaysToRepeat());
+		prep->setInt(10, aJob.getMonthsToRepeat());
+		prep->setString(11, aName);
+		prep->setInt(12, aJob.getRowID());
 		prep->execute();
 	}
 	catch (sql::SQLException e)
@@ -336,8 +343,9 @@ void MySQL_BillsDBManipulator::addPayment(Payment aPayment)
 	con = driver->connect(HOST, USER, PASSWORD);
 
 	string aName = aPayment.getCompany().getCompanyName().substr(0, 100);
+	string anAccntType = aPayment.getAccountType().substr(0, 40);
 
-	prep = con->prepareStatement("INSERT INTO Payment(amount, dueTime, dueDay, dueMonth, dueYear, companyName) VALUES (?, ?, ?, ?, ?, ?)");
+	prep = con->prepareStatement("INSERT INTO Payment(amount, dueTime, dueDay, dueMonth, dueYear, accountType, paidStatus, isRepeating, daysInterval, monthsInterval, companyName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 	try
 	{
 		prep->setDouble(1, aPayment.getAmount());
@@ -345,7 +353,12 @@ void MySQL_BillsDBManipulator::addPayment(Payment aPayment)
 		prep->setInt(3, aPayment.getDay());
 		prep->setDouble(4, aPayment.getMonth());
 		prep->setInt(5, aPayment.getYear());
-		prep->setString(6, aPayment.getCompany().getCompanyName());
+		prep->setString(6, anAccntType);
+		prep->setBoolean(7, aPayment.getIsPaid());
+		prep->setBoolean(8, aPayment.getIsRepeating());
+		prep->setInt(9, aPayment.getDaysToRepeat());
+		prep->setInt(10, aPayment.getMonthsToRepeat());
+		prep->setString(11, aPayment.getCompany().getCompanyName());
 		prep->execute();
 	}
 	catch (sql::SQLException &e)
@@ -403,13 +416,13 @@ Payment* MySQL_BillsDBManipulator::readPayment(int rowID)
 				res->getInt("dueDay"),
 				res->getInt("dueMonth"),
 				res->getInt("dueYear"),
-				false,
-				0,
-				0,
+				res->getBoolean("isRepeating"),
+				res->getInt("daysInterval"),
+				res->getInt("monthsInterval"),
 				readCompany(res->getString("companyName")),
 				res->getDouble("amount"),
-				false,
-				"");
+				res->getBoolean("paidStatus"),
+				res->getString("accountType"));
 		}
 		//else aPayment stays nullptr and is returned as such, must be checked for when using this method
 	}
@@ -432,8 +445,10 @@ void MySQL_BillsDBManipulator::updatePayment(Payment aPayment)
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
+	string aName = aPayment.getCompany().getCompanyName().substr(0, 100);
+	string anAccntType = aPayment.getAccountType().substr(0, 40);
 
-	prep = con->prepareStatement("UPDATE Payment SET amount=?, dueTime=?, dueDay=?, dueMonth=?, dueYear=?, companyName=? WHERE id=?");
+	prep = con->prepareStatement("UPDATE Payment SET amount=?, dueTime=?, dueDay=?, dueMonth=?, dueYear=?, accountType=?, paidStatus=?, isRepeating=?, daysInterval=?, monthsInterval=? companyName=? WHERE id=?");
 	try
 	{
 		prep->setDouble(1, aPayment.getAmount());
@@ -441,8 +456,13 @@ void MySQL_BillsDBManipulator::updatePayment(Payment aPayment)
 		prep->setInt(3, aPayment.getDay());
 		prep->setInt(4, aPayment.getMonth());
 		prep->setInt(5, aPayment.getYear());
-		prep->setString(6, aPayment.getCompany().getCompanyName());
-		prep->setInt(7, aPayment.getRowID());
+		prep->setString(6, anAccntType);
+		prep->setBoolean(7, aPayment.getIsPaid());
+		prep->setBoolean(8, aPayment.getIsRepeating());
+		prep->setInt(9, aPayment.getDaysToRepeat());
+		prep->setInt(10, aPayment.getMonthsToRepeat());
+		prep->setString(11, aName);
+		prep->setInt(12, aPayment.getRowID());
 		prep->execute();
 	}
 	catch (sql::SQLException e)
