@@ -8,7 +8,7 @@ namespace DueItModel
 	{
 	public:
 		Payment(int startingTime, int paymentDay, int mnth, int yr, bool repeating, int daysInterval, int monthsInterval, Company aCompany, double paymentAmount, bool paidStatus, std::string anAccountType);
-		Payment(int dbRowID);
+		Payment(int startingTime, int paymentDay, int mnth, int yr, bool repeating, int daysInterval, int monthsInterval, Company aCompany, double paymentAmount, bool paidStatus, std::string anAccountType, int id);
 		~Payment();
 		std::string toString();
 		void repeat();
@@ -32,7 +32,6 @@ namespace DueItModel
 		bool isPaid;
 		Company company;
 		std::string accountType;
-		int rowID;
 	};
 };
 

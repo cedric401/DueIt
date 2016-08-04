@@ -4,14 +4,19 @@
 
 namespace DueItModel
 {
-	Job::Job(int dbRowID)
-	{
-		rowID = dbRowID;
-		readEntry(dbRowID);
-	}
-
 	Job::Job(int startingTime, int endingTime, int workDay, int mnth, int yr, bool repeating, int daysInterval, int monthsInterval, Company jobEmployer, int hrs, float hrlyRate)
 		: Task(startingTime, workDay, mnth, yr, repeating, daysInterval, monthsInterval)
+	{
+		year = yr;
+		employer = jobEmployer;
+		hours = hrs;
+		rate = hrlyRate;
+		rowID = -1;
+
+	}
+
+	Job::Job(int startingTime, int endingTime, int workDay, int mnth, int yr, bool repeating, int daysInterval, int monthsInterval, Company jobEmployer, int hrs, float hrlyRate, int id)
+		: Task(startingTime, workDay, mnth, yr, repeating, daysInterval, monthsInterval, id)
 	{
 		year = yr;
 		employer = jobEmployer;
@@ -184,11 +189,6 @@ namespace DueItModel
 	float Job::getRate() const
 	{
 		return rate;
-	}
-
-	int Job::getRowID()
-	{
-		return rowID;
 	}
 
 	bool Job::operator==(const Job & rhs)

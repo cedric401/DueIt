@@ -27,7 +27,7 @@ public:
 	virtual void deletePayment(Payment aPayment);
 	virtual Payment* readPayment(int rowID) = 0;
 	virtual void updatePayment(Payment aPayment);
-	virtual std::vector<Task> retrieveTasksInRange(int startTime = 0, int startDay = 1, int startMonth = 1, int startYear = 2000,
+	virtual std::vector<Task*> retrieveBillsInRange(int startTime = 0, int startDay = 1, int startMonth = 1, int startYear = 2000,
 													int endTime = 86399, int endDay = 31, int endMonth = 12, int endYear = 2100) = 0;
 
 };

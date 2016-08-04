@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <iostream>
+#include <sstream>
 #include "MySQL_BillsDBManipulator.h"
 #include "mysql_connection.h"
 #include <cppconn/driver.h>
@@ -18,56 +19,6 @@ using namespace std;
 
 MySQL_BillsDBManipulator::MySQL_BillsDBManipulator()
 {
-	sql::Driver *driver;
-	sql::Connection *con;
-	sql::Statement *stmt;
-	sql::ResultSet *res;
-	sql::PreparedStatement *prep;
-
-	driver = get_driver_instance();
-	con = driver->connect(HOST, USER, PASSWORD);
-
-	stmt = con->createStatement();
-	stmt->execute("USE " DB);
-	try
-	{
-		stmt->execute("INSERT INTO Company(companyName, companyAddress) VALUES ('cbf', '325 side street')");
-	}
-	catch (sql::SQLException &e) 
-	{
-		cout << "# ERR: SQLException in " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line "
-			<< __LINE__ << endl;
-		cout << "# ERR: " << e.what();
-		cout << " (MySQL error code: " << e.getErrorCode();
-		cout << ", SQLState: " << e.getSQLState() <<
-			" )" << endl;
-	}
-
-	res = stmt->executeQuery("SELECT companyName, companyAddress FROM Company ORDER BY companyAddress ASC");
-	while (res->next())
-	{
-		cout << "Company: " << res->getString("companyName").c_str();
-		cout << ", Address: " << res->getString("companyAddress").c_str() << "\n";
-	}
-
-	prep = con->prepareStatement("INSERT INTO Company(companyName, companyAddress) VALUES (?, ?)");
-	try
-	{
-		prep->setString(1, "mcdonalds");
-		prep->setString(2, "123 main street");
-		prep->execute();
-	}
-	catch (sql::SQLException e)
-	{
-		cout << "ERROR: ";
-		cout << e.getErrorCode() << "\n";
-	}
-
-	delete prep;
-	delete res;
-	delete stmt;
-	delete con;
 }
 
 MySQL_BillsDBManipulator::~MySQL_BillsDBManipulator()
@@ -82,6 +33,7 @@ void MySQL_BillsDBManipulator::addCompany(Company aCompany)
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
+	con->setSchema(DB);
 
 	string aName = aCompany.getCompanyName().substr(0, 100);
 	string anAddress = aCompany.getCompanyAddress().substr(0, 200);
@@ -110,6 +62,7 @@ void MySQL_BillsDBManipulator::deleteCompany(Company aCompany)
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
+	con->setSchema(DB);
 
 	prep = con->prepareStatement("DELETE FROM Company WHERE companyName=?");
 	try
@@ -138,11 +91,12 @@ Company MySQL_BillsDBManipulator::readCompany(std::string aName)
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
+	con->setSchema(DB);
 
 	prep = con->prepareStatement("SELECT companyName, companyAddress FROM Company WHERE companyName=?");
 	try
 	{
-		prep->setString(1, "aName");
+		prep->setString(1, aName);
 		res = prep->executeQuery();
 		if (res->next())
 		{
@@ -173,6 +127,7 @@ void MySQL_BillsDBManipulator::updateCompany(Company aCompany, std::string aName
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
+	con->setSchema(DB);
 
 	prep = con->prepareStatement("UPDATE Company SET companyName=?, companyAddress=? WHERE companyName=?");
 	try
@@ -202,6 +157,7 @@ void MySQL_BillsDBManipulator::addJob(Job aJob)
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
+	con->setSchema(DB);
 
 	string aName = aJob.getEmployer().getCompanyName().substr(0, 100);
 
@@ -238,6 +194,7 @@ void MySQL_BillsDBManipulator::deleteJob(Job aJob)
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
+	con->setSchema(DB);
 
 	prep = con->prepareStatement("DELETE FROM Job WHERE id=?");
 	try
@@ -263,6 +220,7 @@ Job* MySQL_BillsDBManipulator::readJob(int rowID)
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
+	con->setSchema(DB);
 
 	prep = con->prepareStatement("SELECT * FROM Job WHERE id=?");
 	try
@@ -280,9 +238,20 @@ Job* MySQL_BillsDBManipulator::readJob(int rowID)
 			res->getBoolean("isRepeating"),
 			res->getInt("daysInterval"),
 			res->getInt("monthsInterval"),
-			readCompany(res->getString("companyName")),
+			Company(),
 			res->getInt("hours"),
 			res->getDouble("rate"));
+
+			prep = con->prepareStatement("SELECT companyName, companyAddress FROM Company WHERE companyName=?");
+			prep->setString(1, res->getString("companyName"));
+			res = prep->executeQuery();
+			if (res->next())
+			{
+				Company aCompany = aJob->getEmployer();
+				aCompany.setCompanyName(res->getString("companyName").c_str());
+				aCompany.setCompanyAddress(res->getString("companyAddress").c_str());
+				aJob->setEmployer(aCompany);
+			}
 		}
 		//else aJob stays nullptr and is returned as such, must be checked for when using this method
 	}
@@ -305,6 +274,7 @@ void MySQL_BillsDBManipulator::updateJob(Job aJob)
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
+	con->setSchema(DB);
 	string aName = aJob.getEmployer().getCompanyName().substr(0, 100);
 
 	prep = con->prepareStatement("UPDATE Job SET startTime=?, endTime=?, hours=?, rate=?, jobDay=?, jobMonth=?, jobYear=?, isRepeating=?, daysInterval=?, monthsInterval=?, companyName=? WHERE id=?");
@@ -341,6 +311,7 @@ void MySQL_BillsDBManipulator::addPayment(Payment aPayment)
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
+	con->setSchema(DB);
 
 	string aName = aPayment.getCompany().getCompanyName().substr(0, 100);
 	string anAccntType = aPayment.getAccountType().substr(0, 40);
@@ -378,6 +349,7 @@ void MySQL_BillsDBManipulator::deletePayment(Payment aPayment)
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
+	con->setSchema(DB);
 
 	prep = con->prepareStatement("DELETE FROM Payment WHERE id=?");
 	try
@@ -399,10 +371,11 @@ Payment* MySQL_BillsDBManipulator::readPayment(int rowID)
 	sql::Connection *con;
 	sql::ResultSet *res;
 	sql::PreparedStatement *prep;
-	Payment * aPayment = nullptr;
+	Payment * aPayment;
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
+	con->setSchema(DB);
 
 	prep = con->prepareStatement("SELECT * FROM Payment WHERE id=?");
 	try
@@ -419,16 +392,33 @@ Payment* MySQL_BillsDBManipulator::readPayment(int rowID)
 				res->getBoolean("isRepeating"),
 				res->getInt("daysInterval"),
 				res->getInt("monthsInterval"),
-				readCompany(res->getString("companyName")),
+				Company(),
 				res->getDouble("amount"),
 				res->getBoolean("paidStatus"),
-				res->getString("accountType"));
+				res->getString("accountType").c_str(),
+				rowID);
+
+			prep = con->prepareStatement("SELECT companyName, companyAddress FROM Company WHERE companyName=?");
+			prep->setString(1, res->getString("companyName"));
+			res = prep->executeQuery();
+
+			if (res->next())
+			{
+				Company aCompany = aPayment->getCompany();
+				aCompany.setCompanyName(res->getString("companyName").c_str());
+				aCompany.setCompanyAddress(res->getString("companyAddress").c_str());
+				aPayment->setCompany(aCompany);
+			}
 		}
-		//else aPayment stays nullptr and is returned as such, must be checked for when using this method
+		else //aPayment stays nullptr and is returned as such, must be checked for when using this method
+		{
+			aPayment = nullptr;
+		}
 	}
 	catch (sql::SQLException e)
 	{
 		printSQLError(__FUNCTION__, __LINE__, e.what(), e.getErrorCode(), e.getSQLState());
+		aPayment = nullptr;
 	}
 	return aPayment;
 
@@ -445,10 +435,16 @@ void MySQL_BillsDBManipulator::updatePayment(Payment aPayment)
 
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
+	con->setSchema(DB);
 	string aName = aPayment.getCompany().getCompanyName().substr(0, 100);
-	string anAccntType = aPayment.getAccountType().substr(0, 40);
+	char accntType[41];
+	char cName[101];
+	strcpy_s(accntType, aPayment.getAccountType().substr(0, 40).c_str());
+	strcpy_s(cName, aPayment.getCompany().getCompanyName().substr(0, 100).c_str());
+	std::istringstream accntTypeStream( accntType );
+	std::istringstream cNameStream(cName);
 
-	prep = con->prepareStatement("UPDATE Payment SET amount=?, dueTime=?, dueDay=?, dueMonth=?, dueYear=?, accountType=?, paidStatus=?, isRepeating=?, daysInterval=?, monthsInterval=? companyName=? WHERE id=?");
+	prep = con->prepareStatement("UPDATE Payment SET amount=?, dueTime=?, dueDay=?, dueMonth=?, dueYear=?, accountType=?, paidStatus=?, isRepeating=?, daysInterval=?, monthsInterval=?, companyName=? WHERE id=?");
 	try
 	{
 		prep->setDouble(1, aPayment.getAmount());
@@ -456,12 +452,12 @@ void MySQL_BillsDBManipulator::updatePayment(Payment aPayment)
 		prep->setInt(3, aPayment.getDay());
 		prep->setInt(4, aPayment.getMonth());
 		prep->setInt(5, aPayment.getYear());
-		prep->setString(6, anAccntType);
+		prep->setBlob(6, & accntTypeStream);
 		prep->setBoolean(7, aPayment.getIsPaid());
 		prep->setBoolean(8, aPayment.getIsRepeating());
 		prep->setInt(9, aPayment.getDaysToRepeat());
 		prep->setInt(10, aPayment.getMonthsToRepeat());
-		prep->setString(11, aName);
+		prep->setBlob(11, & cNameStream);
 		prep->setInt(12, aPayment.getRowID());
 		prep->execute();
 	}
@@ -474,9 +470,71 @@ void MySQL_BillsDBManipulator::updatePayment(Payment aPayment)
 	delete con;
 }
 
-std::vector<Task> MySQL_BillsDBManipulator::retrieveTasksInRange(int startTime, int startDay, int startMonth, int startYear, int endTime, int endDay, int endMonth, int endYear)
+std::vector<Task*> MySQL_BillsDBManipulator::retrieveBillsInRange(int startTime, int startDay, int startMonth, int startYear, int endTime, int endDay, int endMonth, int endYear)
 {
-	return std::vector<Task>();
+	sql::Driver *driver;
+	sql::Connection *con;
+	sql::ResultSet *res;
+	sql::PreparedStatement *prep;
+	vector<Task*> tasksInRange = vector<Task*>();
+
+	driver = get_driver_instance();
+	con = driver->connect(HOST, USER, PASSWORD);
+	con->setSchema(DB);
+
+	try
+	{
+		prep = con->prepareStatement("SELECT id FROM Job WHERE NOT(? > jobYear OR (? = jobYear AND (? > jobMonth OR (? = jobMonth AND (? > jobDay OR (? = jobDay AND ? > startTime)))))) AND NOT(? < jobYear OR (? = jobYear AND (? < jobMonth OR (? = jobMonth AND (? < jobDay OR (? = jobDay AND ? < startTime))))))");
+		prep->setInt(1, startYear);
+		prep->setInt(2, startYear);
+		prep->setInt(3, startMonth);
+		prep->setInt(4, startMonth);
+		prep->setInt(5, startDay);
+		prep->setInt(6, startDay);
+		prep->setInt(7, startTime);
+		prep->setInt(8, endYear);
+		prep->setInt(9, endYear);
+		prep->setInt(10, endMonth);
+		prep->setInt(11, endMonth);
+		prep->setInt(12, endDay);
+		prep->setInt(13, endDay);
+		prep->setInt(14, endTime);
+		res = prep->executeQuery();
+		while (res->next())
+		{
+			tasksInRange.insert(tasksInRange.end(), readJob(res->getInt("id")));
+		}
+		prep = con->prepareStatement("SELECT id FROM Payment WHERE NOT(? > dueYear OR (? = dueYear AND (? > dueMonth OR (? = dueMonth AND (? > dueDay OR (? = dueDay AND ? > dueTime)))))) AND NOT(? < dueYear OR (? = dueYear AND (? < dueMonth OR (? = dueMonth AND (? < dueDay OR (? = dueDay AND ? < dueTime))))))");
+		prep->setInt(1, startYear);
+		prep->setInt(2, startYear);
+		prep->setInt(3, startMonth);
+		prep->setInt(4, startMonth);
+		prep->setInt(5, startDay);
+		prep->setInt(6, startDay);
+		prep->setInt(7, startTime);
+		prep->setInt(8, endYear);
+		prep->setInt(9, endYear);
+		prep->setInt(10, endMonth);
+		prep->setInt(11, endMonth);
+		prep->setInt(12, endDay);
+		prep->setInt(13, endDay);
+		prep->setInt(14, endTime);
+		res = prep->executeQuery();
+		while (res->next())
+		{
+			tasksInRange.insert(tasksInRange.end(), readPayment(res->getInt("id")));
+		}
+		
+	}
+	catch (sql::SQLException &e)
+	{
+		printSQLError(__FUNCTION__, __LINE__, e.what(), e.getErrorCode(), e.getSQLState());
+	}
+	return tasksInRange;
+
+	delete prep;
+	delete con;
+	delete res;
 }
 
 void MySQL_BillsDBManipulator::printSQLError(const std::string& func, int line, const std::string& error, int errorCode, const std::string& state)

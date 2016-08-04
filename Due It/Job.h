@@ -7,8 +7,8 @@ namespace DueItModel
 		public Task
 	{
 	public:
-		Job(int dbRowID);
 		Job(int startingTime, int endingTime, int workDay, int mnth, int yr, bool repeating, int daysInterval, int monthsInterval, Company jobEmployer, int hrs, float hrlyRate);
+		Job(int startingTime, int endingTime, int workDay, int mnth, int yr, bool repeating, int daysInterval, int monthsInterval, Company jobEmployer, int hrs, float hrlyRate, int id);
 		~Job();
 		float calcPay();
 		std::string toString();
@@ -20,7 +20,6 @@ namespace DueItModel
 		int getHours() const;
 		void setRate(float newRate);
 		float getRate() const;
-		int getRowID();
 		bool operator==(const Job& rhs);
 		void createEntry();
 		void deleteEntry();
@@ -32,7 +31,6 @@ namespace DueItModel
 		int endTime; //0 <= endTime <= 86,399 (86,400 seconds in a day)
 		int hours; //0 <= hours
 		float rate; //0 <= rate
-		int rowID; //To identify the corresponding location in the database where the Job information is stored
 	};
 };
 

@@ -10,8 +10,10 @@ namespace DueItModel
 {
 	Schedule::Schedule()
 	{
-		currentSchedule = vector<Task *>();
+		scheduleDB = DBManipulator();
 		updateTime();
+		currentSchedule = scheduleDB.retrieveTasksInRange();
+		updateSchedule();
 	}
 
 	Schedule::~Schedule()
@@ -33,14 +35,16 @@ namespace DueItModel
 			{
 				if ((*iter)->getIsRepeating())
 				{
-					(*iter)->updateEntry();
-					delete (*iter);
-					iter = currentSchedule.erase(iter);
+					while ((*iter)->hasPassed((currentTime->tm_hour * 3600) + (currentTime->tm_min * 60) + currentTime->tm_sec,
+						currentTime->tm_mday, currentTime->tm_mon + 1, currentTime->tm_year + 1900))
+					{
+						(*iter)->repeat();
+					}
+					updateTask((*iter));
 				}
 				else
 				{
-					(*iter)->deleteEntry();
-					delete (*iter);
+					deleteTask(*iter);
 					iter = currentSchedule.erase(iter);
 				}
 			}
@@ -53,9 +57,61 @@ namespace DueItModel
 	void Schedule::addTask(Task * newTask)
 	{
 		currentSchedule.insert(currentSchedule.end(), newTask);
+		if (Payment *p = dynamic_cast<Payment *>(newTask))
+		{
+			scheduleDB.addEntry(dynamic_cast<Payment *>(newTask));
+		}
+		else if (Job *j = dynamic_cast<Job *>(newTask))
+		{
+			scheduleDB.addEntry(dynamic_cast<Job *>(newTask));
+		}
+		else if (AssignmentTask *a = dynamic_cast<AssignmentTask *>(newTask))
+		{
+			scheduleDB.addEntry(dynamic_cast<AssignmentTask *>(newTask));
+		}
+		else if (CourseMeeting *c = dynamic_cast<CourseMeeting *> (newTask))
+		{
+			scheduleDB.addEntry(dynamic_cast<CourseMeeting *>(newTask));
+		}
+	}
+	void Schedule::updateTask(Task * aTask)
+	{
+		if (Payment *p = dynamic_cast<Payment *>(aTask))
+		{
+			scheduleDB.updateEntry(dynamic_cast<Payment *>(aTask));
+		}
+		else if (Job *j = dynamic_cast<Job *>(aTask))
+		{
+			scheduleDB.updateEntry(dynamic_cast<Job *>(aTask));
+		}
+		else if (AssignmentTask *a = dynamic_cast<AssignmentTask *>(aTask))
+		{
+			scheduleDB.updateEntry(dynamic_cast<AssignmentTask *>(aTask));
+		}
+		else if (CourseMeeting *c = dynamic_cast<CourseMeeting *> (aTask))
+		{
+			scheduleDB.updateEntry(dynamic_cast<CourseMeeting *>(aTask));
+		}
 	}
 	void Schedule::deleteTask(Task * aTask)
 	{
+		if (Payment *p = dynamic_cast<Payment *>(aTask))
+		{
+			scheduleDB.deleteEntry(dynamic_cast<Payment *>(aTask));
+		}
+		else if (Job *j = dynamic_cast<Job *>(aTask))
+		{
+			scheduleDB.deleteEntry(dynamic_cast<Job *>(aTask));
+		}
+		else if (AssignmentTask *a = dynamic_cast<AssignmentTask *>(aTask))
+		{
+			scheduleDB.deleteEntry(dynamic_cast<AssignmentTask *>(aTask));
+		}
+		else if (CourseMeeting *c = dynamic_cast<CourseMeeting *> (aTask))
+		{
+			scheduleDB.deleteEntry(dynamic_cast<CourseMeeting *>(aTask));
+		}
+
 		for (std::vector<Task *>::iterator iter = currentSchedule.begin(); iter != currentSchedule.end();)
 		{
 			if (*iter == aTask)
@@ -78,8 +134,7 @@ namespace DueItModel
 			{
 				if (static_cast<AssignmentTask*>(*iter)->getCourse().getCourseNumber() == courseNumber)
 				{
-					(*iter)->deleteEntry();
-					delete (*iter);
+					deleteTask(*iter);
 					iter = currentSchedule.erase(iter);
 				}
 				else
@@ -97,8 +152,7 @@ namespace DueItModel
 			{
 				if (static_cast<Job*>(*iter)->getEmployer().getCompanyName() == companyName)
 				{
-					(*iter)->deleteEntry();
-					delete (*iter);
+					deleteTask(*iter);
 					iter = currentSchedule.erase(iter);
 				}
 				else
@@ -162,8 +216,11 @@ namespace DueItModel
 	{
 		sortTasks();
 		string tasksString = "Current Schedule: \n";
+		int i = 1;
 		for (Task * aTask : currentSchedule)
 		{
+			tasksString += i;
+			tasksString += ". ";
 			tasksString += aTask->toString();
 		}
 

@@ -3,15 +3,17 @@
 
 namespace DueItModel
 {
-	Payment::Payment(int dbRowID)
-	{
-		readEntry(dbRowID);
-		rowID = dbRowID;
-	}
-
-
 	Payment::Payment(int startingTime, int paymentDay, int mnth, int yr, bool repeating, int daysInterval, int monthsInterval, Company aCompany, double paymentAmount, bool paidStatus, std::string anAccountType) 
 		: Task(startingTime, paymentDay, mnth, yr, repeating, daysInterval, monthsInterval)
+	{
+		company = aCompany;
+		amount = paymentAmount;
+		isPaid = paidStatus;
+		accountType = anAccountType;
+	}
+
+	Payment::Payment(int startingTime, int paymentDay, int mnth, int yr, bool repeating, int daysInterval, int monthsInterval, Company aCompany, double paymentAmount, bool paidStatus, std::string anAccountType, int id)
+		: Task(startingTime, paymentDay, mnth, yr, repeating, daysInterval, monthsInterval, id)
 	{
 		company = aCompany;
 		amount = paymentAmount;
@@ -117,6 +119,7 @@ namespace DueItModel
 
 	void Payment::updateEntry()
 	{
+		
 	}
 
 	void Payment::readEntry(int row)

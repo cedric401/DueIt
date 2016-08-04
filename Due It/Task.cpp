@@ -14,6 +14,18 @@ namespace DueItModel
 		monthsToRepeat = monthsInterval;
 	}
 
+	Task::Task(int start, int d, int m, int y, bool repeating, int daysInterval, int monthsInterval, int id)
+	{
+		startTime = start;
+		day = d;
+		month = m;
+		year = y;
+		isRepeating = repeating;
+		daysToRepeat = daysInterval;
+		monthsToRepeat = monthsInterval;
+		rowID = id;
+	}
+
 	Task::~Task()
 	{
 
@@ -64,6 +76,8 @@ namespace DueItModel
 
 	void Task::repeat()
 	{
+		int monthsInterval = monthsToRepeat;
+		int daysInterval = daysToRepeat;
 		if (!isRepeating)
 		{
 			return;
@@ -86,32 +100,32 @@ namespace DueItModel
 			{
 				daysInCurrentMonth = 28;
 			}
-			if (day + daysToRepeat > daysInCurrentMonth)
+			if (day + daysInterval > daysInCurrentMonth)
 			{
 				if (month == 12)
 				{
 					month = 1;
 					year++;
-					day = day + daysToRepeat - 31;
-					daysToRepeat -= 31;
+					day = day + daysInterval - 31;
+					daysInterval -= 31;
 				}
 				else
 				{
 					month++;
-					day = day + daysToRepeat - daysInCurrentMonth;
-					daysToRepeat -= daysInCurrentMonth;
+					day = day + daysInterval - daysInCurrentMonth;
+					daysInterval -= daysInCurrentMonth;
 				}
 			}
 			else
 			{
-				day += daysToRepeat;
+				day += daysInterval;
 			}
-		} while (daysToRepeat >= daysInCurrentMonth);
+		} while (daysInterval >= daysInCurrentMonth);
 
-		while (monthsToRepeat > 0)
+		while (monthsInterval > 0)
 		{
 			month++;
-			monthsToRepeat--;
+			monthsInterval--;
 			if (month == 13)
 			{
 				year++;
@@ -210,6 +224,11 @@ namespace DueItModel
 	int Task::getMonthsToRepeat() const
 	{
 		return monthsToRepeat;
+	}
+
+	int Task::getRowID() const
+	{
+		return rowID;
 	}
 
 	void Task::createEntry()

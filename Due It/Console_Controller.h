@@ -14,5 +14,6 @@ private:
 	void createJob();
 	void createAssignment();
 	void createCourseMeeting();
+	void deleteTask();
 };
 

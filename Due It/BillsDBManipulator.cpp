@@ -47,7 +47,7 @@ void BillsDBManipulator::updatePayment(Payment aPayment)
 {
 }
 
-std::vector<Task> BillsDBManipulator::retrieveTasksInRange(int startTime, int startDay, int startMonth, int startYear, int endTime, int endDay, int endMonth, int endYear)
+std::vector<Task*> BillsDBManipulator::retrieveBillsInRange(int startTime, int startDay, int startMonth, int startYear, int endTime, int endDay, int endMonth, int endYear)
 {
-	return std::vector<Task>();
+	return std::vector<Task*>();
 }

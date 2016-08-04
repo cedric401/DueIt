@@ -5,6 +5,7 @@
 #include "Payment.h"
 #include "CourseMeeting.h"
 #include "AssignmentTask.h"
+#include "DBManipulator.h"
 
 namespace DueItModel
 {
@@ -17,6 +18,7 @@ namespace DueItModel
 		void updateTime();
 		void updateSchedule();
 		void addTask(Task * newTask);
+		void updateTask(Task * aTask);
 		void deleteTask(Task * aTask);
 		void deleteAllTasksForCourse(int courseNumber);
 		void deleteAllTasksForJob(std::string companyName);
@@ -31,6 +33,7 @@ namespace DueItModel
 
 	private:
 		struct tm *currentTime;
+		DBManipulator scheduleDB;
 		std::vector<Task *> currentSchedule;
 		void sortTasks();
 	};

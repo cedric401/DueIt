@@ -22,6 +22,9 @@ Console_Controller::Console_Controller(Schedule* model)
 		case 'a': //Add a task
 			createTask();
 			break;
+		case 'd': //Delete a task
+			deleteTask();
+			break;
 		case 'p': //Print Schedule
 			tasks->updateSchedule();
 			cout << tasks->toString();
@@ -161,6 +164,21 @@ void Console_Controller::createAssignment()
 void Console_Controller::createCourseMeeting()
 {
 	//TODO
+}
+
+void Console_Controller::deleteTask()
+{
+	cout << "Enter the number of the entry to delete (or q to return): ";
+	char response;
+	cin >> response;
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	if (response == 'q')
+	{
+		return;
+	}
+	int responseIndex = response - 48 - 1;
+	tasks->deleteTask(tasks->getTask(responseIndex));
 }
 
 void Console_Controller::createPayment()
