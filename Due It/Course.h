@@ -1,27 +1,35 @@
 #pragma once
 #include <string>
+using std::string;
+#include <sstream>
+using std::stringstream;
+
 namespace DueItModel
 {
 	class Course
 	{
 	public:
-		Course(int courseIDNumber);
-		Course(int courseIDNumber = -1, std::string nameOfCourse = "Default Course Name");
+		Course(string, string, string, string, string);
 		~Course();
-		std::string toString();
-		void setCourseNumber(int newNumber);
-		int getCourseNumber() const;
-		void setCourseName(const std::string& newName);
-		std::string getCourseName() const;
+		void setCourseName(string);
+		string getCourseName();
+		void setCourseSubject(string);
+		string getCourseSubject();
+		void setCourseNumber(string);
+		string getCourseNumber();
+		void setCourseSection(string);
+		string getCourseSection();
+		void setCourseSchedule(string);
+		string getCourseSchedule();
+		string toString();
 		bool operator==(const Course& rhs);
-		void createEntry();
-		void deleteEntry();
-		void updateEntry();
-		void readEntry(int courseID);
-
 	private:
-		int courseNumber;
-		std::string courseName;
+		void initialize(string, string, string, string, string);
+		string courseName;
+		string courseSubject;
+		string courseNumber;
+		string courseSection;
+		string courseSchedule;
 	};
 };
 

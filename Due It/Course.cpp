@@ -1,56 +1,92 @@
 #include "Course.h"
-#include <string>
-
-
 
 namespace DueItModel
 {
-	Course::Course(int courseIDNumber)
+	Course::Course(string cName, string cSubject, string cNumber,
+		string cSection, string cSchedule)
 	{
-		readEntry(courseIDNumber);
-		courseNumber = courseIDNumber;
-	}
-	Course::Course(int courseIDNumber, std::string nameOfCourse)
-	{
-		courseNumber = courseIDNumber;
-		courseName = nameOfCourse;
+		initialize(cName, cSubject, cNumber, cSection, cSchedule);
 	}
 
 	Course::~Course()
 	{
 	}
-	std::string Course::toString()
+
+	void Course::setCourseName(string name)
+	{
+		courseName = name;
+	}
+
+	string Course::getCourseName()
+	{
+		return courseName;
+	}
+
+	void Course::setCourseSubject(string subject)
+	{
+		courseSubject = subject;
+	}
+
+	string Course::getCourseSubject()
+	{
+		return courseSubject;
+	}
+
+	void Course::setCourseNumber(string name)
+	{
+		courseNumber = name;
+	}
+
+	string Course::getCourseNumber()
+	{
+		return courseNumber;
+	}
+
+	void Course::setCourseSection(string section)
+	{
+		courseSection = section;
+	}
+
+	string Course::getCourseSection()
+	{
+		return courseSection;
+	}
+
+	/******************************************************************************
+	setCourseSchedule() uses timeFormat() to create a string representation of
+	the time integers.
+	@fHR, class meets from hour.
+	@fMIN, class meets from minutes.
+	@tHR, class meets to hour.
+	@tMIN, class meets to minutes.
+	******************************************************************************/
+	void Course::setCourseSchedule(string cSchedule)
+	{
+		courseSchedule = cSchedule;
+	}
+
+	string Course::getCourseSchedule()
+	{
+		return courseSchedule;
+	}
+
+	string Course::toString()
 	{
 		return courseNumber + " " + courseName;
 	}
-	void Course::setCourseNumber(int newNumber)
-	{
-	}
-	int Course::getCourseNumber() const
-	{
-		return 0;
-	}
-	void Course::setCourseName(const std::string& newName)
-	{
-	}
-	std::string Course::getCourseName() const
-	{
-		return std::string();
-	}
+
 	bool Course::operator==(const Course & rhs)
 	{
 		return false;
 	}
-	void Course::createEntry()
+
+	// Initialize the fields.
+	void Course::initialize(string name, string sub, string numb, string sect, string sched)
 	{
-	}
-	void Course::deleteEntry()
-	{
-	}
-	void Course::updateEntry()
-	{
-	}
-	void Course::readEntry(int courseID)
-	{
+		setCourseName(name);
+		setCourseSubject(sub);
+		setCourseNumber(numb);
+		setCourseSection(sect);
+		setCourseSchedule(sched);
 	}
 };
