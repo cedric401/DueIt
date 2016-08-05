@@ -117,6 +117,7 @@ void Console_Controller::createJob()
 	int startSeconds, endSeconds, day, month, year, hours, repeatInDays, repeatInMonths;
 	bool repeat;
 	float rate;
+	Company aCompany;
 	cout << "Enter starting time in seconds (0 to 86,399): ";
 	cin >> startSeconds;
 	cout << "Enter ending time in seconds (0 to 86,399): ";
@@ -150,9 +151,21 @@ void Console_Controller::createJob()
 		cout << "Enter number of months until it repeats: ";
 		cin >> repeatInMonths;
 	}
+	cout << "Would you like to enter employer info for this job? (y/n): ";
+	cin >> repeatResp;
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	if (repeatResp != 'y')
+	{
+		aCompany = Company();
+	}
+	else
+	{
+		aCompany = createCompany();
+	}
 	
 	Job *newJob;
-	newJob = new Job(startSeconds, endSeconds, day, month, year, repeat, repeatInDays, repeatInMonths, Company(), hours, rate);
+	newJob = new Job(startSeconds, endSeconds, day, month, year, repeat, repeatInDays, repeatInMonths, aCompany, hours, rate);
 	tasks->addTask(newJob);
 }
 
@@ -164,6 +177,17 @@ void Console_Controller::createAssignment()
 void Console_Controller::createCourseMeeting()
 {
 	//TODO
+}
+
+Company Console_Controller::createCompany()
+{
+	string name, address;
+	cout << "Enter the name of the company: ";
+	cin >> name;
+	cout << "Enter the company's address: ";
+	cin >> address; 
+	Company aCompany = Company(name, address);
+	return aCompany;
 }
 
 void Console_Controller::deleteTask()
@@ -184,9 +208,10 @@ void Console_Controller::deleteTask()
 void Console_Controller::createPayment()
 {
 	int startSeconds, day, month, year, repeatInDays, repeatInMonths;
-	bool repeat;
+	bool repeat, paid;
 	double amount;
 	string accountType;
+	Company aCompany;
 	cout << "Enter starting time in seconds (0 to 86,399): ";
 	cin >> startSeconds;
 	cout << "Enter day (1 to 31): ";
@@ -218,7 +243,31 @@ void Console_Controller::createPayment()
 		cout << "Enter number of months until it repeats: ";
 		cin >> repeatInMonths;
 	}
+	cout << "Would you like to enter info for the company involved in this transaction? (y/n): ";
+	cin >> repeatResp;
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	if (repeatResp != 'y')
+	{
+		aCompany = Company();
+	}
+	else
+	{
+		aCompany = createCompany();
+	}
+	cout << "Has this payment already been paid/received? (y/n): ";
+	cin >> repeatResp;
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	if (repeatResp != 'y')
+	{
+		paid = true;
+	}
+	else
+	{
+		paid = false;
+	}
 	Payment *newPayment;
-	newPayment = new Payment(startSeconds, day, month, year, repeat, repeatInDays, repeatInMonths, Company(), amount, false, accountType);
+	newPayment = new Payment(startSeconds, day, month, year, repeat, repeatInDays, repeatInMonths, aCompany, amount, paid, accountType);
 	tasks->addTask(newPayment);
 }

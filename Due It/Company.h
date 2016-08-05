@@ -6,7 +6,7 @@ namespace DueItModel
 	{
 	public:
 		Company(std::string nameOfCompany);
-		Company(std::string nameOfCompany = "Default Value Co.", std::string address = "123 Main Street");
+		Company(std::string nameOfCompany = "", std::string address = "");
 		~Company();
 		std::string toString();
 		void setCompanyName(const std::string& newName);

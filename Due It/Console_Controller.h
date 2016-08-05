@@ -14,6 +14,7 @@ private:
 	void createJob();
 	void createAssignment();
 	void createCourseMeeting();
+	Company createCompany();
 	void deleteTask();
 };
 
