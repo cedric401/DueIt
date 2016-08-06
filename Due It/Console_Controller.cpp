@@ -183,9 +183,9 @@ Company Console_Controller::createCompany()
 {
 	string name, address;
 	cout << "Enter the name of the company: ";
-	cin >> name;
+	getline(cin, name);
 	cout << "Enter the company's address: ";
-	cin >> address; 
+	getline(cin, address);
 	Company aCompany = Company(name, address);
 	return aCompany;
 }
@@ -223,7 +223,7 @@ void Console_Controller::createPayment()
 	cout << "Enter payment amount: ";
 	cin >> amount;
 	cout << "Enter account type: ";
-	cin >> accountType;
+	getline(cin, accountType);
 	cout << "Does this Payment repeat regularly? (y/n): ";
 	char repeatResp;
 	cin >> repeatResp;

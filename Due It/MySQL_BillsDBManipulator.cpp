@@ -163,7 +163,11 @@ void MySQL_BillsDBManipulator::addJob(Job aJob)
 	con = driver->connect(HOST, USER, PASSWORD);
 	con->setSchema(DB);
 
-	string aName = aJob.getEmployer().getCompanyName().substr(0, 100);
+	char cName[101];
+	strcpy_s(cName, aJob.getEmployer().getCompanyName().substr(0, 100).c_str());
+	std::istringstream cNameStream(cName);
+
+	addCompany(aJob.getEmployer());
 
 	prep = con->prepareStatement("INSERT INTO Job(startTime, endTime, hours, rate, jobDay, jobMonth, jobYear, isRepeating, daysInterval, monthsInterval, companyName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 	try
@@ -178,7 +182,7 @@ void MySQL_BillsDBManipulator::addJob(Job aJob)
 		prep->setBoolean(8, aJob.getIsRepeating());
 		prep->setInt(9, aJob.getDaysToRepeat());
 		prep->setInt(10, aJob.getMonthsToRepeat());
-		prep->setString(11, aName);
+		prep->setBlob(11, & cNameStream);
 		prep->execute();
 	}
 	catch (sql::SQLException &e)

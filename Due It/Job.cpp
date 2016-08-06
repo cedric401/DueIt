@@ -7,6 +7,7 @@ namespace DueItModel
 	Job::Job(int startingTime, int endingTime, int workDay, int mnth, int yr, bool repeating, int daysInterval, int monthsInterval, Company jobEmployer, int hrs, float hrlyRate)
 		: Task(startingTime, workDay, mnth, yr, repeating, daysInterval, monthsInterval)
 	{
+		endTime = endingTime;
 		year = yr;
 		employer = jobEmployer;
 		hours = hrs;
@@ -18,6 +19,7 @@ namespace DueItModel
 	Job::Job(int startingTime, int endingTime, int workDay, int mnth, int yr, bool repeating, int daysInterval, int monthsInterval, Company jobEmployer, int hrs, float hrlyRate, int id)
 		: Task(startingTime, workDay, mnth, yr, repeating, daysInterval, monthsInterval, id)
 	{
+		endTime = endingTime;
 		year = yr;
 		employer = jobEmployer;
 		hours = hrs;
