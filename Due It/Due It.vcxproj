@@ -84,9 +84,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files\MySQL\Connector.C++ 1.1\include;C:\Program Files\Boost\boost_1_61_0</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Program Files\MySQL\Connector.C++ 1.1\lib\opt</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;mysqlcppconn.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -126,14 +129,17 @@
     <ClCompile Include="AssignmentDBRetriever.cpp" />
     <ClCompile Include="AssignmentsList.cpp" />
     <ClCompile Include="AssignmentTask.cpp" />
+    <ClCompile Include="BillsDBManipulator.cpp" />
     <ClCompile Include="Company.cpp" />
     <ClCompile Include="CompletedAssignmentsTasks.cpp" />
     <ClCompile Include="Console_Controller.cpp" />
     <ClCompile Include="Course.cpp" />
     <ClCompile Include="CourseMeeting.cpp" />
     <ClCompile Include="CurrentAssignmentsTasks.cpp" />
+    <ClCompile Include="DBManipulator.cpp" />
     <ClCompile Include="DueIt.cpp" />
     <ClCompile Include="Job.cpp" />
+    <ClCompile Include="MySQL_BillsDBManipulator.cpp" />
     <ClCompile Include="Payment.cpp" />
     <ClCompile Include="Schedule.cpp" />
     <ClCompile Include="Task.cpp" />
@@ -147,13 +153,16 @@
     <ClInclude Include="AssignmentDBRetriever.h" />
     <ClInclude Include="AssignmentsList.h" />
     <ClInclude Include="AssignmentTask.h" />
+    <ClInclude Include="BillsDBManipulator.h" />
     <ClInclude Include="Company.h" />
     <ClInclude Include="CompletedAssignmentsTasks.h" />
     <ClInclude Include="Console_Controller.h" />
     <ClInclude Include="Course.h" />
     <ClInclude Include="CourseMeeting.h" />
     <ClInclude Include="CurrentAssignmentsTasks.h" />
+    <ClInclude Include="DBManipulator.h" />
     <ClInclude Include="Job.h" />
+    <ClInclude Include="MySQL_BillsDBManipulator.h" />
     <ClInclude Include="Payment.h" />
     <ClInclude Include="Schedule.h" />
     <ClInclude Include="Task.h" />

@@ -132,14 +132,17 @@
     <ClCompile Include="Console_Controller.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
+    <ClCompile Include="MySQL_BillsDBManipulator.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="DBManipulator.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="BillsDBManipulator.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Task.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Schedule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AssignmentDBRetriever.h">
       <Filter>Header Files\Model\Assignments</Filter>
     </ClInclude>
@@ -185,8 +188,23 @@
     <ClInclude Include="Payment.h">
       <Filter>Header Files\Model\Bills</Filter>
     </ClInclude>
+    <ClInclude Include="Task.h">
+      <Filter>Header Files\Model\Bills</Filter>
+    </ClInclude>
+    <ClInclude Include="Schedule.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="BillsDBManipulator.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="DBManipulator.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="MySQL_BillsDBManipulator.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
     <ClInclude Include="Console_Controller.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
