@@ -29,8 +29,11 @@ Console_Controller::Console_Controller(Schedule* model)
 			tasks->updateSchedule();
 			cout << tasks->toString();
 			break;
+		case 'u':
+
 		case 'l': //List commands
-			cout << "'q' - Quit program   'a' - Add task(s) to schedule   'p' - Print schedule\n";
+			cout << "'q' - Quit program   'a' - Add task(s) to schedule   'p' - Print schedule\n"
+				 << "'d' - Delete task    'u' - Update task info";
 			break;
 		}
 	}
@@ -193,16 +196,72 @@ Company Console_Controller::createCompany()
 void Console_Controller::deleteTask()
 {
 	cout << "Enter the number of the entry to delete (or q to return): ";
-	char response;
-	cin >> response;
-	cin.clear();
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');
-	if (response == 'q')
+	int responseIndex = getInt();
+	if (responseIndex != -1)
 	{
-		return;
+		if(responseIndex < tasks->getScheduleSize())
+		{
+			tasks->deleteTask(tasks->getTask(responseIndex));
+		}
+		else
+		{
+			cout << "Number out of range. Enter 'p' to see a numbered list of tasks in schedule.\n";
+			return;
+		}
+		cout << "Task deleted. \n";
 	}
-	int responseIndex = response - 48 - 1;
-	tasks->deleteTask(tasks->getTask(responseIndex));
+}
+
+void Console_Controller::updateTask()
+{
+	char response = 'r';
+	while (true)
+	{
+		cout << "Select task type (j=job, p=payment, a=assignment, c=class), r to return: ";
+		cin >> response;
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		switch (response)
+		{
+		case 'r':
+			return;
+		case 'j':
+			updateJob();
+			cout << "Task updated. \n";
+			break;
+		case 'p':
+			updatePayment();
+			cout << "Task updated. \n";
+			break;
+		case 'a':
+			updateAssignment();
+			cout << "Task updated. \n";
+			break;
+		case 'c':
+			updateCourseMeeting();
+			cout << "Task updated. \n";
+			break;
+		default:
+			cout << "Invalid input. \n";
+			break;
+		}
+	}
+}
+
+void Console_Controller::updatePayment()
+{
+}
+
+void Console_Controller::updateJob()
+{
+}
+
+void Console_Controller::updateAssignment()
+{
+}
+
+void Console_Controller::updateCourseMeeting()
+{
 }
 
 void Console_Controller::createPayment()
@@ -223,6 +282,7 @@ void Console_Controller::createPayment()
 	cout << "Enter payment amount: ";
 	cin >> amount;
 	cout << "Enter account type: ";
+	cin.ignore();
 	getline(cin, accountType);
 	cout << "Does this Payment repeat regularly? (y/n): ";
 	char repeatResp;
@@ -271,3 +331,31 @@ void Console_Controller::createPayment()
 	newPayment = new Payment(startSeconds, day, month, year, repeat, repeatInDays, repeatInMonths, aCompany, amount, paid, accountType);
 	tasks->addTask(newPayment);
 }
+
+//Obtained from online here: http://codereview.stackexchange.com/questions/39076/forcing-user-to-enter-an-integer
+int Console_Controller::getInt()
+{
+	int x = 0;
+	bool loop = true;
+	while (loop)
+	{
+		std::cout << "Enter an int (or r to return): ";
+		std::string s;
+		std::getline(std::cin, s);
+
+		std::stringstream stream(s);
+		if (s == "r")
+		{
+			return -1;
+		}
+		if (stream >> x)
+		{
+			loop = false;
+			continue;
+		}
+		std::cout << "Invalid!" << std::endl;
+	}
+	return x;
+}
+
+

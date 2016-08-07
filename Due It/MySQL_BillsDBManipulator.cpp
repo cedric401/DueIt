@@ -68,10 +68,14 @@ void MySQL_BillsDBManipulator::deleteCompany(Company aCompany)
 	con = driver->connect(HOST, USER, PASSWORD);
 	con->setSchema(DB);
 
+	char cName[101];
+	strcpy_s(cName, aCompany.getCompanyName().substr(0, 100).c_str());
+	std::istringstream cNameStream(cName);
+
 	prep = con->prepareStatement("DELETE FROM Company WHERE companyName=?");
 	try
 	{
-		prep->setString(1, aCompany.getCompanyName());
+		prep->setBlob(1, & cNameStream);
 		prep->execute();
 	}
 	catch (sql::SQLException &e)
@@ -97,10 +101,14 @@ Company MySQL_BillsDBManipulator::readCompany(std::string aName)
 	con = driver->connect(HOST, USER, PASSWORD);
 	con->setSchema(DB);
 
+	char cName[101];
+	strcpy_s(cName, aCompany.getCompanyName().substr(0, 100).c_str());
+	std::istringstream cNameStream(cName);
+
 	prep = con->prepareStatement("SELECT companyName, companyAddress FROM Company WHERE companyName=?");
 	try
 	{
-		prep->setString(1, aName);
+		prep->setBlob(1, & cNameStream);
 		res = prep->executeQuery();
 		if (res->next())
 		{
@@ -123,7 +131,7 @@ Company MySQL_BillsDBManipulator::readCompany(std::string aName)
 	delete con;
 }
 
-void MySQL_BillsDBManipulator::updateCompany(Company aCompany, std::string aName)
+void MySQL_BillsDBManipulator::updateCompany(Company aCompany, std::string oldName)
 {
 	sql::Driver *driver;
 	sql::Connection *con;
@@ -133,12 +141,22 @@ void MySQL_BillsDBManipulator::updateCompany(Company aCompany, std::string aName
 	con = driver->connect(HOST, USER, PASSWORD);
 	con->setSchema(DB);
 
+	char cName[101];
+	char oldCName[101];
+	char cAddress[201];
+	strcpy_s(cName, aCompany.getCompanyName().substr(0, 100).c_str());
+	strcpy_s(oldCName, oldName.substr(0, 100).c_str());
+	strcpy_s(cAddress, aCompany.getCompanyAddress().substr(0, 200).c_str());
+	std::istringstream cNameStream(cName);
+	std::istringstream oldNameStream(oldName);
+	std::istringstream cAddressStream(cAddress);
+
 	prep = con->prepareStatement("UPDATE Company SET companyName=?, companyAddress=? WHERE companyName=?");
 	try
 	{
-		prep->setString(1, aCompany.getCompanyName());
-		prep->setString(2, aCompany.getCompanyAddress());
-		prep->setString(3, aName);
+		prep->setBlob(1, & cNameStream);
+		prep->setBlob(2, & cAddressStream);
+		prep->setBlob(3, & oldNameStream);
 		prep->execute();
 	}
 	catch (sql::SQLException e)
@@ -283,7 +301,10 @@ void MySQL_BillsDBManipulator::updateJob(Job aJob)
 	driver = get_driver_instance();
 	con = driver->connect(HOST, USER, PASSWORD);
 	con->setSchema(DB);
-	string aName = aJob.getEmployer().getCompanyName().substr(0, 100);
+	
+	char cName[101];
+	strcpy_s(cName, aJob.getEmployer().getCompanyName().substr(0, 100).c_str());
+	std::istringstream cNameStream(cName);
 
 	prep = con->prepareStatement("UPDATE Job SET startTime=?, endTime=?, hours=?, rate=?, jobDay=?, jobMonth=?, jobYear=?, isRepeating=?, daysInterval=?, monthsInterval=?, companyName=? WHERE id=?");
 	try
@@ -298,7 +319,7 @@ void MySQL_BillsDBManipulator::updateJob(Job aJob)
 		prep->setBoolean(8, aJob.getIsRepeating());
 		prep->setInt(9, aJob.getDaysToRepeat());
 		prep->setInt(10, aJob.getMonthsToRepeat());
-		prep->setString(11, aName);
+		prep->setBlob(11, & cNameStream);
 		prep->setInt(12, aJob.getRowID());
 		prep->execute();
 	}

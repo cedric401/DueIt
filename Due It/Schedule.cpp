@@ -215,16 +215,17 @@ namespace DueItModel
 	string Schedule::toString()
 	{
 		sortTasks();
-		string tasksString = "Current Schedule: \n";
+		stringstream tasksString;
+		tasksString << "Current Schedule: \n";
 		int i = 1;
 		for (Task * aTask : currentSchedule)
 		{
-			tasksString += i;
-			tasksString += ". ";
-			tasksString += aTask->toString();
+			tasksString << i << ". ";
+			tasksString << aTask->toString();
+			i++;
 		}
 
-		return tasksString;
+		return tasksString.str();
 	}
 	Task * Schedule::getTask(int index)
 	{
@@ -238,6 +239,10 @@ namespace DueItModel
 	tm * Schedule::getCurrentTime()
 	{
 		return currentTime;
+	}
+	int Schedule::getScheduleSize()
+	{
+		return currentSchedule.size();
 	}
 	void Schedule::sortTasks()
 	{

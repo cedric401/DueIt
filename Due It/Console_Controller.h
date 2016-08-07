@@ -16,5 +16,11 @@ private:
 	void createCourseMeeting();
 	Company createCompany();
 	void deleteTask();
+	void updateTask();
+	void updatePayment();
+	void updateJob();
+	void updateAssignment();
+	void updateCourseMeeting();
+	int getInt();
 };
 

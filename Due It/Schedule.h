@@ -30,6 +30,7 @@ namespace DueItModel
 		Task * getTask(int index);
 		void setCurrentTime(struct tm *newTime);
 		struct tm * getCurrentTime();
+		int getScheduleSize();
 
 	private:
 		struct tm *currentTime;
