@@ -17,10 +17,10 @@ private:
 	Company createCompany();
 	void deleteTask();
 	void updateTask();
-	void updatePayment();
-	void updateJob();
-	void updateAssignment();
-	void updateCourseMeeting();
+	void updatePayment(Payment* aPayment);
+	void updateJob(Job* aJob);
+	void updateAssignment(AssignmentTask* anAssignment);
+	void updateCourseMeeting(CourseMeeting* aMeeting);
 	int getInt();
 };
 

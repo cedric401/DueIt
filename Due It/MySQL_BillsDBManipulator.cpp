@@ -266,7 +266,8 @@ Job* MySQL_BillsDBManipulator::readJob(int rowID)
 			res->getInt("monthsInterval"),
 			Company(),
 			res->getInt("hours"),
-			res->getDouble("rate"));
+			res->getDouble("rate"),
+			rowID);
 
 			prep = con->prepareStatement("SELECT companyName, companyAddress FROM Company WHERE companyName=?");
 			prep->setString(1, res->getString("companyName"));
@@ -305,6 +306,12 @@ void MySQL_BillsDBManipulator::updateJob(Job aJob)
 	char cName[101];
 	strcpy_s(cName, aJob.getEmployer().getCompanyName().substr(0, 100).c_str());
 	std::istringstream cNameStream(cName);
+
+	//if job'scompany is not default AND readCompany returns a Company obj w/ default values, no matching company entry was found; add one
+	if (!(aJob.getEmployer() == Company()) && readCompany(aJob.getEmployer().getCompanyName()) == Company())
+	{
+		addCompany(aJob.getEmployer());
+	}
 
 	prep = con->prepareStatement("UPDATE Job SET startTime=?, endTime=?, hours=?, rate=?, jobDay=?, jobMonth=?, jobYear=?, isRepeating=?, daysInterval=?, monthsInterval=?, companyName=? WHERE id=?");
 	try
@@ -477,6 +484,12 @@ void MySQL_BillsDBManipulator::updatePayment(Payment aPayment)
 	strcpy_s(cName, aPayment.getCompany().getCompanyName().substr(0, 100).c_str());
 	std::istringstream accntTypeStream( accntType );
 	std::istringstream cNameStream(cName);
+
+	//if payment's company is not default AND readCompany returns a Company obj w/ default values, no matching company entry was found; add one
+	if (!(aPayment.getCompany() == Company()) && readCompany(aPayment.getCompany().getCompanyName()) == Company())
+	{
+		addCompany(aPayment.getCompany());
+	}
 
 	prep = con->prepareStatement("UPDATE Payment SET amount=?, dueTime=?, dueDay=?, dueMonth=?, dueYear=?, accountType=?, paidStatus=?, isRepeating=?, daysInterval=?, monthsInterval=?, companyName=? WHERE id=?");
 	try

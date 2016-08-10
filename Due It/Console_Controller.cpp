@@ -30,10 +30,11 @@ Console_Controller::Console_Controller(Schedule* model)
 			cout << tasks->toString();
 			break;
 		case 'u':
-
+			updateTask();
+			break;
 		case 'l': //List commands
 			cout << "'q' - Quit program   'a' - Add task(s) to schedule   'p' - Print schedule\n"
-				 << "'d' - Delete task    'u' - Update task info";
+				 << "'d' - Delete task    'u' - Update task info\n";
 			break;
 		}
 	}
@@ -195,7 +196,7 @@ Company Console_Controller::createCompany()
 
 void Console_Controller::deleteTask()
 {
-	cout << "Enter the number of the entry to delete (or q to return): ";
+	cout << "Enter the number of the entry to delete (or r to return): ";
 	int responseIndex = getInt();
 	if (responseIndex != -1)
 	{
@@ -214,53 +215,186 @@ void Console_Controller::deleteTask()
 
 void Console_Controller::updateTask()
 {
-	char response = 'r';
-	while (true)
+	cout << "Enter the number of the entry to update (or r to return): ";
+	int responseIndex = getInt();
+	if (responseIndex != -1 && responseIndex <= tasks->getScheduleSize())
 	{
-		cout << "Select task type (j=job, p=payment, a=assignment, c=class), r to return: ";
-		cin >> response;
-		cin.clear();
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		switch (response)
+		Task * aTask = tasks->getTask(responseIndex - 1);
+		if (Payment *p = dynamic_cast<Payment *>(aTask))
 		{
-		case 'r':
-			return;
-		case 'j':
-			updateJob();
-			cout << "Task updated. \n";
-			break;
-		case 'p':
-			updatePayment();
-			cout << "Task updated. \n";
-			break;
-		case 'a':
-			updateAssignment();
-			cout << "Task updated. \n";
-			break;
-		case 'c':
-			updateCourseMeeting();
-			cout << "Task updated. \n";
-			break;
-		default:
-			cout << "Invalid input. \n";
-			break;
+			updatePayment(dynamic_cast<Payment *>(aTask));
+		}
+		else if (Job *j = dynamic_cast<Job *>(aTask))
+		{
+			updateJob(dynamic_cast<Job *>(aTask));
+		}
+		else if (AssignmentTask *a = dynamic_cast<AssignmentTask *>(aTask))
+		{
+			updateAssignment(dynamic_cast<AssignmentTask *>(aTask));
+		}
+		else if (CourseMeeting *c = dynamic_cast<CourseMeeting *> (aTask))
+		{
+			updateCourseMeeting(dynamic_cast<CourseMeeting *>(aTask));
 		}
 	}
+	else
+	{
+		cout << "Number out of range. Enter 'p' to see a numbered list of tasks in schedule.\n";
+		return;
+	}
+	cout << "Task updated. \n";
 }
 
-void Console_Controller::updatePayment()
+void Console_Controller::updatePayment(Payment* aPayment)
+{
+	int startSeconds, day, month, year, repeatInDays, repeatInMonths;
+	bool repeat, paid;
+	double amount;
+	string accountType;
+	Company aCompany;
+	cout << "Updating " << aPayment->toString() << endl;
+	cout << "Enter starting time in seconds (0 to 86,399): ";
+	cin >> startSeconds;
+	cout << "Enter day (1 to 31): ";
+	cin >> day;
+	cout << "Enter month (1 to 12): ";
+	cin >> month;
+	cout << "Enter year: ";
+	cin >> year;
+	cout << "Enter payment amount: ";
+	cin >> amount;
+	cout << "Enter account type: ";
+	cin.ignore();
+	getline(cin, accountType);
+	cout << "Does this Payment repeat regularly? (y/n): ";
+	char repeatResp;
+	cin >> repeatResp;
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	if (repeatResp != 'y')
+	{
+		repeat = false;
+		repeatInDays = 0;
+		repeatInMonths = 0;
+	}
+	else
+	{
+		repeat = true;
+		cout << "Enter number of days until it repeats: ";
+		cin >> repeatInDays;
+		cout << "Enter number of months until it repeats: ";
+		cin >> repeatInMonths;
+	}
+	cout << "Would you like to enter info for the company involved in this transaction? (y/n): ";
+	cin >> repeatResp;
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	if (repeatResp != 'y')
+	{
+		aCompany = Company();
+	}
+	else
+	{
+		aCompany = createCompany();
+	}
+	cout << "Has this payment already been paid/received? (y/n): ";
+	cin >> repeatResp;
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	if (repeatResp != 'y')
+	{
+		paid = false;
+	}
+	else
+	{
+		paid = true;
+	}
+	aPayment->setTime(startSeconds);
+	aPayment->setDay(day);
+	aPayment->setMonth(month);
+	aPayment->setYear(year);
+	aPayment->setDaysToRepeat(repeatInDays);
+	aPayment->setMonthsToRepeat(repeatInMonths);
+	aPayment->setIsRepeating(repeat);
+	aPayment->setIsPaid(paid);
+	aPayment->setAmount(amount);
+	aPayment->setAccountType(accountType);
+	aPayment->setCompany(aCompany);
+	tasks->updateTask(aPayment);
+}
+
+void Console_Controller::updateJob(Job* aJob)
+{
+	int startSeconds, endSeconds, day, month, year, hours, repeatInDays, repeatInMonths;
+	bool repeat;
+	float rate;
+	Company aCompany;
+	cout << "Updating " << aJob->toString() << endl;
+	cout << "Enter starting time in seconds (0 to 86,399): ";
+	cin >> startSeconds;
+	cout << "Enter ending time in seconds (0 to 86,399): ";
+	cin >> endSeconds;
+	cout << "Enter day (1 to 31): ";
+	cin >> day;
+	cout << "Enter month (1 to 12): ";
+	cin >> month;
+	cout << "Enter year: ";
+	cin >> year;
+	cout << "Enter number of paid hours: ";
+	cin >> hours;
+	cout << "Enter hourly pay rate: ";
+	cin >> rate;
+	cout << "Does this Job repeat regularly? (y/n): ";
+	char repeatResp;
+	cin >> repeatResp;
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	if (repeatResp != 'y')
+	{
+		repeat = false;
+		repeatInDays = 0;
+		repeatInMonths = 0;
+	}
+	else
+	{
+		repeat = true;
+		cout << "Enter number of days until it repeats: ";
+		cin >> repeatInDays;
+		cout << "Enter number of months until it repeats: ";
+		cin >> repeatInMonths;
+	}
+	cout << "Would you like to enter employer info for this job? (y/n): ";
+	cin >> repeatResp;
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	if (repeatResp != 'y')
+	{
+		aCompany = Company();
+	}
+	else
+	{
+		aCompany = createCompany();
+	}
+
+	aJob->setTime(startSeconds);
+	aJob->setEnd(endSeconds);
+	aJob->setDay(day);
+	aJob->setMonth(month);
+	aJob->setYear(year);
+	aJob->setHours(hours);
+	aJob->setDaysToRepeat(repeatInDays);
+	aJob->setMonthsToRepeat(repeatInMonths);
+	aJob->setIsRepeating(repeat);
+	aJob->setRate(rate);
+	aJob->setEmployer(aCompany);
+	tasks->updateTask(aJob);
+}
+
+void Console_Controller::updateAssignment(AssignmentTask* anAssignment)
 {
 }
 
-void Console_Controller::updateJob()
-{
-}
-
-void Console_Controller::updateAssignment()
-{
-}
-
-void Console_Controller::updateCourseMeeting()
+void Console_Controller::updateCourseMeeting(CourseMeeting* aMeeting)
 {
 }
 
@@ -339,7 +473,6 @@ int Console_Controller::getInt()
 	bool loop = true;
 	while (loop)
 	{
-		std::cout << "Enter an int (or r to return): ";
 		std::string s;
 		std::getline(std::cin, s);
 

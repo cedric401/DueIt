@@ -24,7 +24,7 @@ namespace DueItModel
 		employer = jobEmployer;
 		hours = hrs;
 		rate = hrlyRate;
-		rowID = -1;
+		rowID = id;
 
 	}
 
